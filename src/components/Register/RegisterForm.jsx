@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Form, Button, Alert, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { API_REGISTER_URL, API_LOGIN_URL } from '../../common/constants';
-import { API_KEY } from '../../common/config';
+import { API_KEY } from '../../common/constants';
 import AuthContext from '../../context/AuthContext';
 
 const RegisterForm = () => {
@@ -11,6 +11,7 @@ const RegisterForm = () => {
     name: '',
     email: '',
     password: '',
+    role: 'customer', // 'customer' or 'venueManager'
   });
 
   const [errors, setErrors] = useState({});
@@ -33,7 +34,8 @@ const RegisterForm = () => {
   };
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
     setErrors({});
     setServerResponse('');
   };
@@ -46,15 +48,21 @@ const RegisterForm = () => {
       return;
     }
 
+    const payload = {
+      name: formData.name,
+      email: formData.email,
+      password: formData.password,
+      venueManager: formData.role === 'venueManager', // send boolean
+    };
+
     try {
-      // Register user
       const registerRes = await fetch(API_REGISTER_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'X-API-Key': API_KEY,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const registerData = await registerRes.json();
@@ -65,7 +73,6 @@ const RegisterForm = () => {
       }
 
       if (registerRes.ok) {
-        // Immediately log in
         const loginRes = await fetch(API_LOGIN_URL, {
           method: 'POST',
           headers: {
@@ -137,6 +144,14 @@ const RegisterForm = () => {
             isInvalid={!!errors.password}
           />
           <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group className="mb-4" controlId="role">
+          <Form.Label>Registering As</Form.Label>
+          <Form.Select name="role" value={formData.role} onChange={handleChange}>
+            <option value="customer">Customer</option>
+            <option value="venueManager">Venue Manager</option>
+          </Form.Select>
         </Form.Group>
 
         <Button variant="primary" type="submit">Register</Button>
