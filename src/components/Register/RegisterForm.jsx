@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Form, Button, Alert, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { API_REGISTER_URL, API_LOGIN_URL } from '../../common/constants';
+import { API_KEY } from '../../common/config';
 import AuthContext from '../../context/AuthContext';
 
 const RegisterForm = () => {
@@ -46,10 +47,13 @@ const RegisterForm = () => {
     }
 
     try {
-      // Step 1: Register the user
+      // Register user
       const registerRes = await fetch(API_REGISTER_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-Key': API_KEY,
+        },
         body: JSON.stringify(formData),
       });
 
@@ -61,10 +65,13 @@ const RegisterForm = () => {
       }
 
       if (registerRes.ok) {
-        // Step 2: Immediately log them in using login API
+        // Immediately log in
         const loginRes = await fetch(API_LOGIN_URL, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: {
+            'Content-Type': 'application/json',
+            'X-API-Key': API_KEY,
+          },
           body: JSON.stringify({
             email: formData.email,
             password: formData.password,
@@ -74,11 +81,10 @@ const RegisterForm = () => {
         const loginData = await loginRes.json();
 
         if (loginRes.ok) {
-          // Step 3: Save via context and redirect
           login(loginData.data.accessToken, loginData.data);
           navigate('/dashboard');
         } else {
-          setServerResponse('⚠️ Registered, but login failed. Please try logging in manually.');
+          setServerResponse('✅ Registered, but login failed. Try logging in manually.');
           navigate('/login');
         }
       } else {

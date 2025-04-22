@@ -6,4 +6,4 @@ export const API_PRODUCTS_URL = `${API_BASE_URL}/holidaze/venues`;
 export const API_SINGLE_PRODUCT_URL = `${API_BASE_URL}/holidaze/venues`;
 export const API_PROFILE_URL = `${API_BASE_URL}/holidaze/profiles`;
 export const API_BOOKINGS_URL = `${API_BASE_URL}/holidaze/bookings`;
-export const API_KEY = "857d70c0-ecb1-48e9-82d3-7609d2c35475";
+export const API_KEY = process.env.REACT_APP_API_KEY;
