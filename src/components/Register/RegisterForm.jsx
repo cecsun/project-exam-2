@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Form, Button, Alert, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { API_REGISTER_URL } from '../../common/constants';
+import { API_REGISTER_URL, API_LOGIN_URL } from '../../common/constants';
+import AuthContext from '../../context/AuthContext';
 
 const RegisterForm = () => {
+  const { login } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,7 +28,6 @@ const RegisterForm = () => {
     if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters';
     }
-
     return newErrors;
   };
 
@@ -45,31 +46,43 @@ const RegisterForm = () => {
     }
 
     try {
-      const response = await fetch(API_REGISTER_URL, {
+      // Step 1: Register the user
+      const registerRes = await fetch(API_REGISTER_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const registerData = await registerRes.json();
 
-      if (response.status === 400) {
-        alert(`❌ ${data.errors[0].message || 'Registration failed'}`);
+      if (registerRes.status === 400) {
+        alert(`❌ ${registerData.errors?.[0]?.message || 'Registration failed'}`);
         return;
       }
 
-      if (response.ok) {
-        
-        // 🔐 Save token to localStorage (adjust key name as needed)
-        // localStorage.setItem('accessToken', data.accessToken || data.token);
+      if (registerRes.ok) {
+        // Step 2: Immediately log them in using login API
+        const loginRes = await fetch(API_LOGIN_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
 
-        // 🚀 Optionally save user info
-        // localStorage.setItem('user', JSON.stringify(data));
+        const loginData = await loginRes.json();
 
-        // 🧭 Redirect to dashboard or wherever
-        navigate('/login');
+        if (loginRes.ok) {
+          // Step 3: Save via context and redirect
+          login(loginData.data.accessToken, loginData.data);
+          navigate('/dashboard');
+        } else {
+          setServerResponse('⚠️ Registered, but login failed. Please try logging in manually.');
+          navigate('/login');
+        }
       } else {
-        setServerResponse(`❌ ${data.message || 'Registration failed'}`);
+        setServerResponse(`❌ ${registerData.message || 'Registration failed'}`);
       }
     } catch (error) {
       setServerResponse(`🚨 Network error: ${error.message}`);
