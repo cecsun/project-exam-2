@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFetch } from '../../hooks/useFetch';
-import { API_SINGLE_PRODUCT_URL } from '../../common/constants';
+import { API_BOOKINGS_URL, API_SINGLE_PRODUCT_URL, API_KEY } from '../../common/constants';
 import { useState, useContext } from 'react';
 import {
   Container,
@@ -15,13 +15,12 @@ import {
 } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { subDays, addDays } from 'date-fns';
 import AuthContext from '../../context/AuthContext';
 
 function SingleProductPage() {
   const params = useParams();
   const { data, hasError, isLoading } = useFetch(
-    `${API_SINGLE_PRODUCT_URL}/${params.id}`
+    `${API_SINGLE_PRODUCT_URL}/${params.id}?_bookings=true`
   );
 
   const navigate = useNavigate();
@@ -36,12 +35,17 @@ function SingleProductPage() {
   const [guests, setGuests] = useState(1);
 
   const { isAuthenticated } = useContext(AuthContext); // Get user from AuthContext
-  // Simulated booked dates
-  const bookedDates = [
-    subDays(new Date(), 1),
-    addDays(new Date(), 2),
-    addDays(new Date(), 5),
-  ];
+  
+  // Add all the booked data from the data.data.bookings array
+  const bookedDates = product?.bookings?.map((booking) => {
+    const startDate = new Date(booking.dateFrom);
+    const endDate = new Date(booking.dateTo);
+    const dates = [];
+    for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+      dates.push(new Date(d));
+    }
+    return dates;
+  }).flat() || [];
 
   const handleDateChange = (dates) => {
     setSelectedDates(dates);
@@ -52,8 +56,38 @@ function SingleProductPage() {
     setGuests(value);
   };
 
-  const handleBookNowClick = () => {
-    navigate('/profile');
+  const handleBookNowClick = async () => {
+    if (selectedDates[0] === null || selectedDates[1] === null) {
+      alert('Please select a date range before booking.');
+      return;
+    }
+    try {
+      const res = await fetch(`${API_BOOKINGS_URL}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          'X-Noroff-API-Key': API_KEY,
+        },
+        body: JSON.stringify({
+          dateFrom: selectedDates[0]?.toISOString(), // Required - Instance of new Date()
+          dateTo: selectedDates[1]?.toISOString(), // Required - Instance of new Date()
+          guests: guests,
+          venueId: product.id
+        }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        alert('✅ Booking created successfully!', data);
+      } else {
+        const errorData = await res.json();
+        throw new Error(errorData.message || 'Failed to create booking');
+      }
+    } catch (err) {
+      console.error('Booking creation error:', err);
+      alert(`❌ Error creating booking: ${err.message}`);
+    }
+    // navigate('/profile');
   };
 
   if (isLoading) {
@@ -132,7 +166,7 @@ function SingleProductPage() {
 
           {/* Check Availability Section */}
           <div className="mt-4">
-            <h5>Check Availability</h5>
+            <h5>Booking</h5>
             <Form>
               <Form.Group controlId="formDate">
                 <Form.Label>Select a Date Range</Form.Label>
@@ -169,10 +203,6 @@ function SingleProductPage() {
                   Max Guests: {product.maxGuests}
                 </Form.Text>
               </Form.Group>
-
-              <Button variant="primary" className="mt-3">
-                Check Availability
-              </Button>
             </Form>
           </div>
 

@@ -10,6 +10,7 @@ import LoginPage from './pages/LoginPage';
 import SingleProductPage from './pages/SingleProductPage';
 import ProfilePage from './pages/ProfilePage';
 import RouteNotFound from './pages/RouteNotFound';
+import CreateVenue from './pages/CreateVenue';
 // import ProtectedRoute from './components/ProtectedRoute/index.js';
 
 function App() {
@@ -22,16 +23,8 @@ function App() {
           <Route path="login" element={<LoginPage />} />
           <Route path="/product/:id" element={<SingleProductPage />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="/venues/create" element={<CreateVenue />} />
           <Route path="*" element={<RouteNotFound />} />
-          
-          {/* <Route
-            path="/HomePage"
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-          /> */}
         </Route>
       </Routes>
     </div>

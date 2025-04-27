@@ -60,7 +60,7 @@ const RegisterForm = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-Key': API_KEY,
+          'X-Noroff-API-Key': API_KEY,
         },
         body: JSON.stringify(payload),
       });
@@ -89,7 +89,7 @@ const RegisterForm = () => {
 
         if (loginRes.ok) {
           login(loginData.data.accessToken, loginData.data);
-          navigate('/dashboard');
+          navigate('/profile');
         } else {
           setServerResponse('✅ Registered, but login failed. Try logging in manually.');
           navigate('/login');
