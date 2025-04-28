@@ -9,9 +9,30 @@ const ProfilePage = () => {
   const [profileData, setProfileData] = useState(null);
   const [avatarUrl, setAvatarUrl] = useState('');
   const [bookings, setBookings] = useState([]);
+  const [venueBookings, setVenueBookings] = useState([]);
   const [venues, setVenues] = useState([]);
+
   const [newBooking, setNewBooking] = useState({ dateFrom: '', dateTo: '', guests: 0, venueId: '' });
   const navigate = useNavigate();
+
+  const fetchVenueBookings = async (venueId) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/holidaze/venues/${venueId}?_bookings=true`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          'X-Noroff-API-Key': API_KEY,
+        },
+      });
+      if (!res.ok) throw new Error('Failed to load venue bookings');
+      const data = await res.json();
+      return data.data.bookings || [];
+    } catch (err) {
+      console.error('Error loading venue bookings:', err);
+      return [];
+    }
+  };
+
 
   useEffect(() => {
     if (!user) return;
@@ -32,6 +53,8 @@ const ProfilePage = () => {
         setAvatarUrl(data.data.avatar?.url || '');
         setBookings(data.data.bookings || []);
         setVenues(data.data.venues || []);
+        const venueBookings = await fetchVenueBookings(data.data.venues.map(venue => venue.id));
+        setVenueBookings(venueBookings);
       } catch (err) {
         console.error('Error loading profile:', err);
       }
@@ -264,10 +287,10 @@ const ProfilePage = () => {
             </Form> */}
 
             <h4 className="mt-4">Existing Bookings</h4>
-            {bookings.length > 0 ? (
-              bookings.map((booking) => (
+            {venueBookings.length > 0 ? (
+              venueBookings.map((booking) => (
                 <Card key={booking.id} className="mb-3 p-3">
-                  <strong>{booking.venue.name}</strong> – {new Date(booking.dateFrom).toLocaleDateString()}
+                  <strong>{booking.venue.name}</strong> {new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}
                   <div className="mt-2">
                     {/* <Button
                       variant="secondary"
