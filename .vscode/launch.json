@@ -2,10 +2,24 @@
     "version": "0.2.0",
     "configurations": [
       {
+        "name": "Launch Edge",
+        "request": "launch",
+        "type": "msedge",
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
+        "name": "Launch Chrome",
+        "request": "launch",
+        "type": "chrome",
+        "url": "http://localhost:3000",
+        "webRoot": "${workspaceFolder}"
+      },
+      {
         "name": "Debug CRA in Chrome",
         "type": "msedge",
         "request": "launch",
-        "url": "http://localhost:3001",
+        "url": "http://localhost:3000",
         "webRoot": "${workspaceFolder}/src",
         "reAttach": true,
         "pathMappings": [

@@ -24,8 +24,10 @@ const LoginForm = () => {
 
       if (!res.ok) {
         setError('Failed to fetch profile data');
+        return false;
       }
       const profileData = await res.json();
+      console.log('Profile data:', profileData);
       if (res.ok) {
         return profileData.data.venueManager;
       } else {
@@ -55,11 +57,11 @@ const LoginForm = () => {
 
       if (response.ok && data.data?.accessToken) {
         // I want to check the return value of the isVenueManager function before logging in
-
+          
         const isManager = await isVenueManager(data.data);
         const enhancedUser = {
           ...data.data,
-          venueManager: isManager ? 'venueManager' : 'customer',
+          venueManager: isManager,
         };
         login(data.data.accessToken, enhancedUser);       
       } else {

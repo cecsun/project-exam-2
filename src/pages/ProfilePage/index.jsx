@@ -29,9 +29,9 @@ const ProfilePage = () => {
         if (!res.ok) throw new Error('Failed to load profile');
         const data = await res.json();
         setProfileData(data);
-        setAvatarUrl(data.avatar?.url || '');
-        setBookings(data.bookings || []);
-        setVenues(data.venues || []);
+        setAvatarUrl(data.data.avatar?.url || '');
+        setBookings(data.data.bookings || []);
+        setVenues(data.data.venues || []);
       } catch (err) {
         console.error('Error loading profile:', err);
       }

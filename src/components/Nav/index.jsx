@@ -23,12 +23,9 @@ function Nav() {
                 {isAuthenticated ? (
                     <>
                         <li>
-                            {user?.userType === 'venueManager' && (
-                                <Link to="/profile">Venue Manager Profile</Link>
-                            )}
-                            {user?.userType === 'customer' && (
-                                <Link to="/profile">Customer Profile</Link>
-                            )}
+                            <Link to="/profile">
+                                {user?.venueManager ? 'Venue Manager Profile' : 'Customer Profile'}
+                            </Link>
                         </li>
                         <li>
                             <button onClick={handleLogout}>Log Out</button>

@@ -13,12 +13,8 @@ export const AuthProvider = ({ children }) => {
 
     if (token && savedUser) {
       const parsedUser = JSON.parse(savedUser);
-      const enhancedUser = {
-        ...parsedUser,
-        userType: parsedUser.venueManager ? 'venueManager' : 'customer',
-      };
       setIsAuthenticated(true);
-      setUser(enhancedUser);
+      setUser(parsedUser);
     } else {
       setIsAuthenticated(false);
       setUser(null);
@@ -27,15 +23,10 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (token, user) => {
-    const enhancedUser = {
-      ...user,
-      userType: user.venueManager ? 'venueManager' : 'customer',
-    };
-
     localStorage.setItem('accessToken', token);
-    localStorage.setItem('user', JSON.stringify(enhancedUser));
+    localStorage.setItem('user', JSON.stringify(user));
     setIsAuthenticated(true);
-    setUser(enhancedUser);
+    setUser(user);
   };
 
   const logout = () => {

@@ -88,7 +88,11 @@ const RegisterForm = () => {
         const loginData = await loginRes.json();
 
         if (loginRes.ok) {
-          login(loginData.data.accessToken, loginData.data);
+          const enhancedUser = {
+            ...loginData.data,
+            venueManager: formData.role === 'venueManager', // add venueManager property
+          };
+          login(loginData.data.accessToken, enhancedUser); // use enhancedUser instead of loginData.data
           navigate('/profile');
         } else {
           setServerResponse('✅ Registered, but login failed. Try logging in manually.');
