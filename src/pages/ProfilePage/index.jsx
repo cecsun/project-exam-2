@@ -26,7 +26,11 @@ const ProfilePage = () => {
       });
       if (!res.ok) throw new Error('Failed to load venue bookings');
       const data = await res.json();
-      return data.data.bookings || [];
+      const enhancedData = data.data.bookings.map(booking => ({
+        ...booking,
+        venue: data.data, // Assuming the venue data is in the same response
+      }));
+      return enhancedData;
     } catch (err) {
       console.error('Error loading venue bookings:', err);
       return [];
