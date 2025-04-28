@@ -184,20 +184,11 @@ const ProfilePage = () => {
           <Button variant="primary" type="submit" className="mt-2">Save Avatar</Button>
         </Form>
 
-        {!profileData.data.venueManager && (
-          <>
-            <h4>Your Bookings</h4>
-            {bookings.length > 0 ? (
-              bookings.map(booking => (
-                <Card key={booking.id} className="mb-2 p-3">
-                  <strong>{booking.venue.name}</strong> {new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}
-                </Card>
-              ))
-            ) : (
-              <p>You have no upcoming bookings.</p>
-            )}
-          </>
-        )}
+        {/* {!profileData.data.venueManager && ( */}
+          {/* <> */}
+
+          {/* </> */}
+        {/* )} */}
 
         {profileData.data.venueManager && (
           <>
@@ -298,6 +289,17 @@ const ProfilePage = () => {
               <p>No bookings available.</p>
             )}
           </>
+          
+        )}
+        <h4>Your Bookings</h4>
+        {bookings.length > 0 ? (
+          bookings.map(booking => (
+            <Card key={booking.id} className="mb-2 p-3">
+              <strong>{booking.venue.name}</strong> {new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}
+            </Card>
+          ))
+        ) : (
+          <p>You have no upcoming bookings.</p>
         )}
       </Card>
     </Container>
