@@ -189,7 +189,7 @@ const ProfilePage = () => {
             {venueBookings.length > 0 ? (
               venueBookings.map((booking) => (
                 <Card key={booking.id} className="mb-3 p-3">
-                  <strong>{booking.customer.name}</strong> {new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}
+                 <strong>{booking.venue.name}</strong> <strong>{booking.customer.name}</strong> {new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}
                 </Card>
               ))
             ) : (
