@@ -110,6 +110,7 @@ const ProfilePage = () => {
 
       if (res.ok) {
         setBookings((prev) => prev.filter((booking) => booking.id !== id));
+        setVenueBookings((prev) => prev.filter((booking) => booking.id !== id));
         alert('✅ Booking deleted successfully!');
       } else {
         const errorData = await res.json();
@@ -188,15 +189,7 @@ const ProfilePage = () => {
             {venueBookings.length > 0 ? (
               venueBookings.map((booking) => (
                 <Card key={booking.id} className="mb-3 p-3">
-                  <strong>{booking.venue.name}</strong> {new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}
-                  <div className="mt-2">
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDeleteBooking(booking.id)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
+                  <strong>{booking.customer.name}</strong> {new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}
                 </Card>
               ))
             ) : (
