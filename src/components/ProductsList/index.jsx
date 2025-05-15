@@ -36,23 +36,29 @@ function ProductsList() {
     fetchVenues(query);
   };
 
-  return (
+return (
+  <>
     <Container className="py-4">
-      <SearchBar onSearch={handleSearch} />
+      <div className="mb-4">
+        <SearchBar onSearch={handleSearch} />
+      </div>
+
       {isLoading && (
         <div className="text-center py-5">
           <Spinner animation="border" role="status" />
           <p className="mt-3">Loading venues...</p>
         </div>
       )}
+
       {hasError && (
         <Alert variant="danger" className="mt-4">
           Error loading venues. Please try again later.
         </Alert>
       )}
+
       {!isLoading && !hasError && (
         filteredProducts.length > 0 ? (
-          <Row className="mt-4" xs={1} sm={2} md={3} lg={4} xl={5}>
+          <Row className="mt-4" xs={1} sm={2} md={3} lg={4}>
             {filteredProducts.map((productDetails) => (
               <Col key={productDetails.id} className="mb-4 d-flex">
                 <Product productDetails={productDetails} />
@@ -66,7 +72,9 @@ function ProductsList() {
         )
       )}
     </Container>
-  );
+  </>
+);
+
 }
 
 export default ProductsList;

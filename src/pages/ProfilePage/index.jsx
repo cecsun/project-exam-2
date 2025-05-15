@@ -1,5 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Container, Button, Card, Image, Spinner, Form } from 'react-bootstrap';
+import {
+  Container,
+  Button,
+  Card,
+  Image,
+  Spinner,
+  Form,
+  Row,
+  Col,
+  Tabs,
+  Tab,
+} from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { API_BASE_URL, API_KEY } from '../../common/constants';
@@ -12,31 +23,33 @@ const ProfilePage = () => {
   const [venueBookings, setVenueBookings] = useState([]);
   const [venues, setVenues] = useState([]);
 
-  const [newBooking, setNewBooking] = useState({ dateFrom: '', dateTo: '', guests: 0, venueId: '' });
   const navigate = useNavigate();
 
-  const fetchVenueBookings = async (venueId) => {
+  const fetchVenueBookings = async (venueIds) => {
     try {
-      const res = await fetch(`${API_BASE_URL}/holidaze/venues/${venueId}?_bookings=true`, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
-          'X-Noroff-API-Key': API_KEY,
-        },
-      });
-      if (!res.ok) throw new Error('Failed to load venue bookings');
-      const data = await res.json();
-      const enhancedData = data.data.bookings.map(booking => ({
-        ...booking,
-        venue: data.data, // Assuming the venue data is in the same response
-      }));
-      return enhancedData;
+      const allBookings = await Promise.all(
+        venueIds.map(async (venueId) => {
+          const res = await fetch(`${API_BASE_URL}/holidaze/venues/${venueId}?_bookings=true`, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+              'X-Noroff-API-Key': API_KEY,
+            },
+          });
+          if (!res.ok) throw new Error('Failed to load venue bookings');
+          const data = await res.json();
+          return data.data.bookings.map((booking) => ({
+            ...booking,
+            venue: data.data,
+          }));
+        })
+      );
+      return allBookings.flat();
     } catch (err) {
       console.error('Error loading venue bookings:', err);
       return [];
     }
   };
-
 
   useEffect(() => {
     if (!user) return;
@@ -46,7 +59,7 @@ const ProfilePage = () => {
         const res = await fetch(`${API_BASE_URL}/holidaze/profiles/${user.name}?_bookings=true&_venues=true`, {
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+            Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
             'X-Noroff-API-Key': API_KEY,
           },
         });
@@ -57,7 +70,7 @@ const ProfilePage = () => {
         setAvatarUrl(data.data.avatar?.url || '');
         setBookings(data.data.bookings || []);
         setVenues(data.data.venues || []);
-        const venueBookings = await fetchVenueBookings(data.data.venues.map(venue => venue.id));
+        const venueBookings = await fetchVenueBookings(data.data.venues.map((v) => v.id));
         setVenueBookings(venueBookings);
       } catch (err) {
         console.error('Error loading profile:', err);
@@ -73,19 +86,19 @@ const ProfilePage = () => {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           'X-Noroff-API-Key': API_KEY,
         },
         body: JSON.stringify({
           avatar: {
             url: avatarUrl,
-            alt: `${user.name}'s avatar`
+            alt: `${user.name}'s avatar`,
           },
         }),
       });
       if (res.ok) {
         const updated = await res.json();
-        setProfileData(prev => ({ ...prev, avatar: updated }));
+        setProfileData((prev) => ({ ...prev, avatar: updated }));
         alert('✅ Avatar updated successfully!');
       } else {
         const errorData = await res.json();
@@ -97,13 +110,12 @@ const ProfilePage = () => {
     }
   };
 
-  // Handle Booking De/letion
   const handleDeleteBooking = async (id) => {
     try {
       const res = await fetch(`${API_BASE_URL}/holidaze/bookings/${id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           'X-Noroff-API-Key': API_KEY,
         },
       });
@@ -142,7 +154,7 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        <Form className="mb-4" onSubmit={e => { e.preventDefault(); handleAvatarUpdate(); }}>
+        <Form className="mb-4" onSubmit={(e) => { e.preventDefault(); handleAvatarUpdate(); }}>
           <Form.Group>
             <Form.Label>Update Avatar URL</Form.Label>
             <Form.Control
@@ -155,67 +167,98 @@ const ProfilePage = () => {
           <Button variant="primary" type="submit" className="mt-2">Save Avatar</Button>
         </Form>
 
-        {profileData.data.venueManager && (
-          <>
-            <h4>Your Venues</h4>
-            {venues.length > 0 ? (
-              venues.map(venue => (
-                <Card key={venue.id} className="mb-3 p-3">
-                  <strong>{venue.name}</strong>
-                  <div className="mt-2">
-                    <Button
-                      variant="secondary"
-                      onClick={() => navigate(`/venues/edit/${venue.id}`)}
-                      className="me-2"
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="danger"
-                      onClick={() => navigate(`/venues/delete/${venue.id}`)}
-                    >
-                      Delete
-                    </Button>
+        <Tabs defaultActiveKey="bookings" id="profile-tabs" className="mb-4">
+          <Tab eventKey="bookings" title="My Bookings">
+            {bookings.length > 0 ? (
+              bookings.map((booking) => (
+                <Card key={booking.id} className="mb-3 d-flex flex-row align-items-center p-3">
+                  <Image
+                    src={booking.venue?.media?.[0]?.url || 'https://via.placeholder.com/100x100?text=No+Image'}
+                    alt={booking.venue?.media?.[0]?.alt || booking.venue?.name}
+                    thumbnail
+                    width={100}
+                    height={100}
+                    className="me-3"
+                    style={{ objectFit: 'cover' }}
+                  />
+                  <div className="flex-grow-1">
+                    <strong>{booking.venue.name}</strong><br />
+                    {new Date(booking.dateFrom).toLocaleDateString()} – {new Date(booking.dateTo).toLocaleDateString()}
+                    <div className="mt-2">
+                      <Button variant="danger" onClick={() => handleDeleteBooking(booking.id)}>Delete</Button>
+                    </div>
                   </div>
                 </Card>
               ))
             ) : (
-              <p>You haven't added any venues yet.</p>
+              <p>You have no upcoming bookings.</p>
             )}
-            <Button onClick={() => navigate('/venues/create')}>Create New Venue</Button>
-            {/* <h4 className="mt-4">Manage Bookings</h4> */}
+          </Tab>
 
-            <h4 className="mt-4">Your Venue Bookings</h4>
-            {venueBookings.length > 0 ? (
-              venueBookings.map((booking) => (
-                <Card key={booking.id} className="mb-3 p-3">
-                 <strong>{booking.venue.name}</strong> <strong>{booking.customer.name}</strong> {new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}
-                </Card>
-              ))
-            ) : (
-              <p>No bookings available.</p>
-            )}
-          </>
-          
-        )}
-        <h4>Your Bookings</h4>
-        {bookings.length > 0 ? (
-          bookings.map(booking => (
-            <Card key={booking.id} className="mb-2 p-3">
-              <strong>{booking.venue.name}</strong> {new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}
-              <div className="mt-2">
-                <Button
-                  variant="danger"
-                  onClick={() => handleDeleteBooking(booking.id)}
-                >
-                  Delete
-                </Button>
-              </div>           
-            </Card>
-          ))
-        ) : (
-          <p>You have no upcoming bookings.</p>
-        )}
+          {profileData.data.venueManager && (
+            <Tab eventKey="venues" title="My Venues">
+              <Row>
+                <Col md={6}>
+                  <h5>Your Venues</h5>
+                  {venues.length > 0 ? (
+                    venues.map((venue) => (
+                      <Card key={venue.id} className="mb-3 d-flex flex-row align-items-center p-3">
+                        <Image
+                          src={venue.media?.[0]?.url || 'https://via.placeholder.com/100x100?text=No+Image'}
+                          alt={venue.media?.[0]?.alt || venue.name}
+                          thumbnail
+                          width={100}
+                          height={100}
+                          className="me-3"
+                          style={{ objectFit: 'cover' }}
+                        />
+                        <div className="flex-grow-1">
+                          <strong>{venue.name}</strong>
+                          <div className="mt-2">
+                            <Button variant="secondary" onClick={() => navigate(`/venues/edit/${venue.id}`)} className="me-2">
+                              Edit
+                            </Button>
+                            <Button variant="danger" onClick={() => navigate(`/venues/delete/${venue.id}`)}>
+                              Delete
+                            </Button>
+                          </div>
+                        </div>
+                      </Card>
+                    ))
+                  ) : (
+                    <p>You haven't added any venues yet.</p>
+                  )}
+                  <Button onClick={() => navigate('/venues/create')}>Create New Venue</Button>
+                </Col>
+
+                <Col md={6}>
+                  <h5>Your Venue Bookings</h5>
+                  {venueBookings.length > 0 ? (
+                    venueBookings.map((booking) => (
+                      <Card key={booking.id} className="mb-3 d-flex flex-row align-items-center p-3">
+                        <Image
+                          src={booking.venue?.media?.[0]?.url || 'https://via.placeholder.com/100x100?text=No+Image'}
+                          alt={booking.venue?.media?.[0]?.alt || booking.venue?.name}
+                          thumbnail
+                          width={100}
+                          height={100}
+                          className="me-3"
+                          style={{ objectFit: 'cover' }}
+                        />
+                        <div className="flex-grow-1">
+                          <strong>{booking.venue.name}</strong> — {booking.customer?.name}<br />
+                          {new Date(booking.dateFrom).toLocaleDateString()} – {new Date(booking.dateTo).toLocaleDateString()}
+                        </div>
+                      </Card>
+                    ))
+                  ) : (
+                    <p>No bookings available.</p>
+                  )}
+                </Col>
+              </Row>
+            </Tab>
+          )}
+        </Tabs>
       </Card>
     </Container>
   );

@@ -10,7 +10,6 @@ import {
   Button,
   Spinner,
   Alert,
-  Badge,
   Form,
 } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
@@ -24,32 +23,27 @@ function SingleProductPage() {
   );
 
   const navigate = useNavigate();
-
   const product = data?.data;
-  const discountPercentage =
-    product && product.discountedPrice < product.price
-      ? ((product.price - product.discountedPrice) / product.price) * 100
-      : 0;
 
   const [selectedDates, setSelectedDates] = useState([null, null]);
   const [guests, setGuests] = useState(1);
 
-  const { isAuthenticated } = useContext(AuthContext); // Get user from AuthContext
-  
-  // Add all the booked data from the data.data.bookings array
-  const bookedDates = product?.bookings?.map((booking) => {
-    const startDate = new Date(booking.dateFrom);
-    const endDate = new Date(booking.dateTo);
-    const dates = [];
-    for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
-      dates.push(new Date(d));
-    }
-    return dates;
-  }).flat() || [];
+  const { isAuthenticated } = useContext(AuthContext);
 
-  const handleDateChange = (dates) => {
-    setSelectedDates(dates);
-  };
+  const bookedDates =
+    product?.bookings
+      ?.map((booking) => {
+        const startDate = new Date(booking.dateFrom);
+        const endDate = new Date(booking.dateTo);
+        const dates = [];
+        for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+          dates.push(new Date(d));
+        }
+        return dates;
+      })
+      .flat() || [];
+
+  const handleDateChange = (dates) => setSelectedDates(dates);
 
   const handleGuestChange = (e) => {
     const value = Math.min(e.target.value, product.maxGuests);
@@ -66,14 +60,14 @@ function SingleProductPage() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
           'X-Noroff-API-Key': API_KEY,
         },
         body: JSON.stringify({
-          dateFrom: selectedDates[0]?.toISOString(), // Required - Instance of new Date()
-          dateTo: selectedDates[1]?.toISOString(), // Required - Instance of new Date()
-          guests: guests,
-          venueId: product.id
+          dateFrom: selectedDates[0]?.toISOString(),
+          dateTo: selectedDates[1]?.toISOString(),
+          guests,
+          venueId: product.id,
         }),
       });
       if (res.ok) {
@@ -87,7 +81,6 @@ function SingleProductPage() {
       console.error('Booking creation error:', err);
       alert(`❌ Error creating booking: ${err.message}`);
     }
-    // navigate('/profile');
   };
 
   if (isLoading) {
@@ -117,44 +110,42 @@ function SingleProductPage() {
 
   return (
     <Container className="py-4">
-      <Row>
-        <Col md={6}>
-          {product.media?.length > 0 && (
+      {/* Image carousel full width */}
+      {product.media?.length > 0 && (
+        <Row className="mb-4">
+          <Col>
             <Carousel>
               {product.media.map((item, index) => (
                 <Carousel.Item key={index}>
                   <img
                     src={item.url}
                     alt={item.alt || product.name}
-                    className="d-block w-100"
-                    style={{ maxHeight: '400px', objectFit: 'cover' }}
+                    className="d-block w-100 rounded"
+                    style={{ height: '400px', objectFit: 'cover' }}
                   />
                 </Carousel.Item>
               ))}
             </Carousel>
-          )}
-        </Col>
+          </Col>
+        </Row>
+      )}
 
-        <Col md={6}>
+      {/* Two columns below image */}
+      <Row>
+        <Col md={7}>
           <h2>{product.name}</h2>
           <p>{product.description}</p>
 
-          {product.discountedPrice < product.price ? (
-            <>
-              <h4 className="text-success">${product.discountedPrice.toFixed(2)}</h4>
-              <Badge bg="danger" className="mb-2">
-                {discountPercentage.toFixed(2)}% off
-              </Badge>
-              <div className="text-muted text-decoration-line-through">
-                ${product.price.toFixed(2)}
-              </div>
-            </>
-          ) : (
-            <h4>${product.price.toFixed(2)}</h4>
+          <h4 className="text-success">${product.price.toFixed(2)}</h4>
+
+          {product.rating && (
+            <div className="mb-3">
+              <strong>Rating:</strong> {product.rating} / 5
+            </div>
           )}
 
           {product.location && (
-            <div className="mt-3 text-muted small">
+            <div className="text-muted small mb-4">
               <strong>Location:</strong>
               <div>{product.location.address}</div>
               <div>
@@ -163,32 +154,37 @@ function SingleProductPage() {
               <div>{product.location.country}</div>
             </div>
           )}
+        </Col>
 
-          {/* Check Availability Section */}
-          <div className="mt-4">
+        <Col md={5}>
+          <div className="booking-section p-3 border rounded shadow-sm">
             <h5>Booking</h5>
             <Form>
-              <Form.Group controlId="formDate">
-                <Form.Label>Select a Date Range</Form.Label>
-                <DatePicker
-                  selected={selectedDates[0]}
-                  onChange={handleDateChange}
-                  startDate={selectedDates[0]}
-                  endDate={selectedDates[1]}
-                  selectsRange
-                  minDate={new Date()}
-                  dateFormat="MMMM d, yyyy"
-                  className="form-control"
-                  highlightDates={bookedDates}
-                  filterDate={(date) =>
-                    !bookedDates.some(
-                      (bookedDate) =>
-                        bookedDate.toDateString() === date.toDateString()
-                    )
-                  }
-                  shouldCloseOnSelect={false}
-                />
-              </Form.Group>
+              <Form.Group controlId="formDate" className="d-flex justify-content-center">
+  {/* Removed the label since the calendar is always visible */}
+  <DatePicker
+    onChange={handleDateChange}
+    startDate={selectedDates[0]}
+    endDate={selectedDates[1]}
+    selectsRange
+    minDate={new Date()}
+    inline
+    highlightDates={bookedDates}
+    filterDate={(date) =>
+      !bookedDates.some(
+        (bookedDate) => bookedDate.toDateString() === date.toDateString()
+      )
+    }
+     dayClassName={(date) =>
+    bookedDates.some(
+      (bookedDate) => bookedDate.toDateString() === date.toDateString()
+    )
+      ? 'booked-day'
+      : undefined
+  }
+  />
+</Form.Group>
+
 
               <Form.Group controlId="formGuests" className="mt-3">
                 <Form.Label>Number of Guests</Form.Label>
@@ -203,20 +199,24 @@ function SingleProductPage() {
                   Max Guests: {product.maxGuests}
                 </Form.Text>
               </Form.Group>
+
+              {isAuthenticated && (
+                <Button
+                  onClick={handleBookNowClick}
+                  variant="success"
+                  className="mt-4 w-100"
+                >
+                  Book Now
+                </Button>
+              )}
+
+              {!isAuthenticated && (
+                <Alert variant="warning" className="mt-3">
+                  Please log in to book this product.
+                </Alert>
+              )}
             </Form>
           </div>
-
-          {product.rating && (
-            <div className="mt-4">
-              <h5>Rating: {product.rating}/5</h5>
-            </div>
-          )}
-
-          {isAuthenticated && (
-          <Button onClick={handleBookNowClick} variant="success" className="mt-3">
-            Book Now
-          </Button>
-          )}
         </Col>
       </Row>
     </Container>

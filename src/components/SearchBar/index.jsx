@@ -13,6 +13,7 @@ function SearchBar({ onSearch }) {
           type="text"
           onChange={handleInputChange}
           placeholder="Search by name or description..."
+          className="search-input"
         />
       </Form>
     </Container>
