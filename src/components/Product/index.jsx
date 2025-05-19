@@ -30,18 +30,18 @@ export default function Product({ productDetails }) {
         <Card.Body className="d-flex flex-column">
           <Card.Title className="fw-semibold">{name}</Card.Title>
 
-          <Card.Text className="text-muted small text-truncate-description">
+          <Card.Text className="small text-truncate-description">
             {description}
           </Card.Text>
 
           {location?.city && location?.country && (
-            <div className="text-muted mb-2 small d-flex align-items-center gap-1">
-              📍 {location.city}, {location.country}
+            <div className="text-muted small">
+                {location.city}, {location.country}
             </div>
           )}
 
           <div className="mt-auto">
-            <h5 className="fw-bold">${price.toFixed(2)}</h5>
+            <h5 className="card-price fw-semibold">${price.toFixed(2)}</h5>
           </div>
         </Card.Body>
       </Card>
