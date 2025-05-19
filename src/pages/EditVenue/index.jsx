@@ -115,7 +115,7 @@ function EditVenue() {
   }
 
   return (
-    <Container className="mt-5" style={{ maxWidth: '600px' }}>
+    <Container className="update-venue mt-5" style={{ maxWidth: '600px' }}>
       <h2>Edit Venue</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       {success && <Alert variant="success">{success}</Alert>}
@@ -183,7 +183,7 @@ function EditVenue() {
         <Button variant="secondary" onClick={addImageField} type="button">
           Add Image
         </Button>
-        <Button variant="primary" type="submit" className="mt-3 ms-2">
+        <Button type="submit" className="update-venue-button ms-2 my-3">
           Update Venue
         </Button>
       </Form>

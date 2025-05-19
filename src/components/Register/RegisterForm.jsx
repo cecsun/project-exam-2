@@ -107,7 +107,7 @@ const RegisterForm = () => {
   };
 
   return (
-    <Container className="mt-5" style={{ maxWidth: '500px' }}>
+    <Container className="register-form mt-5" style={{ maxWidth: '500px' }}>
       <h2 className="mb-4">Register</h2>
       {serverResponse && <Alert variant="danger">{serverResponse}</Alert>}
       <Form onSubmit={handleSubmit} noValidate>
@@ -158,7 +158,9 @@ const RegisterForm = () => {
           </Form.Select>
         </Form.Group>
 
-        <Button variant="primary" type="submit">Register</Button>
+        <div className="d-flex justify-content-center mb-5">
+          <Button type="submit" className='register-button'>Register</Button>
+        </div>
       </Form>
     </Container>
   );

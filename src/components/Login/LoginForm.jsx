@@ -40,40 +40,46 @@ const LoginForm = () => {
 
   }
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    try {
-      const response = await fetch(API_LOGIN_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Noroff-API-Key': API_KEY,
-        },
-        body: JSON.stringify({ email, password }),
-      });
+  try {
+    const response = await fetch(API_LOGIN_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Noroff-API-Key': API_KEY,
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (response.ok && data.data?.accessToken) {
-        // I want to check the return value of the isVenueManager function before logging in
-          
-        const isManager = await isVenueManager(data.data);
-        const enhancedUser = {
-          ...data.data,
-          venueManager: isManager,
-        };
-        login(data.data.accessToken, enhancedUser);       
-      } else {
-        setError('Invalid response from server');
-      }
-    } catch (err) {
-      setError('Login failed. Please try again.');
+    if (response.ok && data.data?.accessToken) {
+      // Check if the user is a venue manager
+      const isManager = await isVenueManager(data.data);
+
+      const enhancedUser = {
+        ...data.data,
+        venueManager: isManager,
+      };
+
+      login(data.data.accessToken, enhancedUser);
+
+      // ✅ Navigate to the profile page after successful login
+      navigate('/profile');
+    } else {
+      setError('Invalid email or password');
     }
-  };
+  } catch (err) {
+    console.error('Login error:', err);
+    setError('Login failed. Please try again.');
+  }
+};
+
 
   return (
-    <Container className="mt-5" style={{ maxWidth: '500px' }}>
+    <Container className="login-form mt-5" style={{ maxWidth: '500px' }}>
       <h2>Login</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={handleLogin}>
@@ -97,7 +103,9 @@ const LoginForm = () => {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">Login</Button>
+        <div className="d-flex justify-content-center">
+          <Button type="submit" className='login-button'>Login</Button>
+        </div>
       </Form>
     </Container>
   );

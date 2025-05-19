@@ -90,7 +90,7 @@ function CreateVenue() {
   };
 
   return (
-    <Container className="mt-5" style={{ maxWidth: '600px' }}>
+    <Container className="create-venue-form mt-5" style={{ maxWidth: '600px' }}>
       <h2>Create Venue</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       {success && <Alert variant="success">{success}</Alert>}
@@ -169,7 +169,7 @@ function CreateVenue() {
           Add Image
         </Button>
         <div></div>
-        <Button variant="primary" type="submit" className="mt-3">
+        <Button type="submit" className="create-venue-button my-5 w-100">
           Create Venue
         </Button>
       </Form>
