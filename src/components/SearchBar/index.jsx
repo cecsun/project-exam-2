@@ -12,7 +12,7 @@ function SearchBar({ onSearch }) {
         <Form.Control
           type="text"
           onChange={handleInputChange}
-          placeholder="Search by name or description..."
+          placeholder="Search by name, city or country..."
           className="search-input"
         />
       </Form>
