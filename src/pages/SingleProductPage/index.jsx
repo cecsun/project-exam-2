@@ -73,6 +73,7 @@ function SingleProductPage() {
       if (res.ok) {
         const data = await res.json();
         alert('✅ Booking created successfully!', data);
+        navigate('/profile');
       } else {
         const errorData = await res.json();
         throw new Error(errorData.message || 'Failed to create booking');
