@@ -22,6 +22,8 @@ const ProfilePage = () => {
   const [bookings, setBookings] = useState([]);
   const [venueBookings, setVenueBookings] = useState([]);
   const [venues, setVenues] = useState([]);
+  const [activeTab, setActiveTab] = useState('bookings');
+
 
   const navigate = useNavigate();
 
@@ -149,25 +151,30 @@ const ProfilePage = () => {
             height="100"
           />
           <div>
-            <h3>{profileData.data.name}</h3>
+            <h3 className='profile-name'>{profileData.data.name}</h3>
             <p><strong>Role:</strong> {profileData.data.venueManager ? 'Venue Manager' : 'Customer'}</p>
           </div>
         </div>
 
         <Form className="mb-4" onSubmit={(e) => { e.preventDefault(); handleAvatarUpdate(); }}>
           <Form.Group>
-            <Form.Label>Update Avatar URL</Form.Label>
+            <Form.Label>Update profile picture</Form.Label>
             <Form.Control
               type="url"
-              placeholder="Enter new avatar image URL"
+              placeholder="Image URL"
               value={avatarUrl}
               onChange={(e) => setAvatarUrl(e.target.value)}
             />
           </Form.Group>
-          <Button variant="primary" type="submit" className="mt-2">Save Avatar</Button>
+          <div className='d-flex justify-content-end mt-2'>
+            <Button type="submit" className="save-picture">Save</Button>
+          </div>
         </Form>
 
-        <Tabs defaultActiveKey="bookings" id="profile-tabs" className="mb-4">
+        <Tabs
+          activeKey={activeTab}
+          onSelect={(k) => setActiveTab(k)}
+          className="mb-4 gap-1 profile-tabs">
           <Tab eventKey="bookings" title="My Bookings">
             {bookings.length > 0 ? (
               bookings.map((booking) => (
@@ -228,7 +235,7 @@ const ProfilePage = () => {
                   ) : (
                     <p>You haven't added any venues yet.</p>
                   )}
-                  <Button onClick={() => navigate('/venues/create')}>Create New Venue</Button>
+                  <Button onClick={() => navigate('/venues/create')} className='create-venue-button my-3'>Create New Venue</Button>
                 </Col>
 
                 <Col md={6}>
