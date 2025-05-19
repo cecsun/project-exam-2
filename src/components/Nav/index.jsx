@@ -16,9 +16,9 @@ function AppNavbar() {
   };
 
   return (
-    <Navbar bg="light" expand="lg" className="shadow-sm py-3">
+    <Navbar expand="lg" className="shadow-sm py-3">
       <Container>
-        <Navbar.Brand as={Link} to="/" className="fw-bold text-primary">
+        <Navbar.Brand as={Link} to="/" className="fw-bold text-light">
           Holidaze
         </Navbar.Brand>
         <Navbar.Toggle />
@@ -27,16 +27,16 @@ function AppNavbar() {
             {isAuthenticated ? (
               <>
                 <Nav.Link as={Link} to="/profile">
-                  {user?.venueManager ? 'Venue Manager' : 'Profile'}
+                  {user?.venueManager ? 'Profile' : 'Profile'}
                 </Nav.Link>
-                <Button variant="outline-danger" onClick={handleLogout}>
+                <Button variant="outline-none" onClick={handleLogout}>
                   Logout
                 </Button>
               </>
             ) : (
               <>
-                <Nav.Link as={Link} to="/register">Register</Nav.Link>
-                <Nav.Link as={Link} to="/login">Login</Nav.Link>
+                <Nav.Link as={Link} to="/register" className='register-link'>Register</Nav.Link>
+                <Nav.Link as={Link} to="/login" className='login-link'>Login</Nav.Link>
               </>
             )}
           </Nav>
