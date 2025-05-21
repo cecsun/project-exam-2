@@ -41,7 +41,7 @@ export default function Product({ productDetails }) {
           )}
 
           <div className="mt-auto">
-            <h5 className="card-price fw-semibold">${price.toFixed(2)}</h5>
+            <h5 className="card-price fw-semibold">${price.toFixed(2)}<span className='text-muted fw-light'>/night</span></h5>
           </div>
         </Card.Body>
       </Card>

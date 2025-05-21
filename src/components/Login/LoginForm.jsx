@@ -79,8 +79,8 @@ const handleLogin = async (e) => {
 
 
   return (
-    <Container className="login-form mt-5" style={{ maxWidth: '500px' }}>
-      <h2>Login</h2>
+    <Container className="login-form bg-light mt-5 border rounded shadow-sm">
+      <h2 className='mb-4 d-flex justify-content-center'>Login</h2>
       {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={handleLogin}>
         <Form.Group className="mb-3" controlId="email">
@@ -104,7 +104,7 @@ const handleLogin = async (e) => {
         </Form.Group>
 
         <div className="d-flex justify-content-center">
-          <Button type="submit" className='login-button'>Login</Button>
+          <Button type="submit" className='login-button my-3'>Login</Button>
         </div>
       </Form>
     </Container>

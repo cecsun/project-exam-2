@@ -189,7 +189,7 @@ const ProfilePage = () => {
                     style={{ objectFit: 'cover' }}
                   />
                   <div className="flex-grow-1">
-                    <strong>{booking.venue.name}</strong><br />
+                    <strong className='text-break'>{booking.venue.name}</strong><br />
                     {new Date(booking.dateFrom).toLocaleDateString()} – {new Date(booking.dateTo).toLocaleDateString()}
                     <div className="mt-2">
                       <Button variant="danger" onClick={() => handleDeleteBooking(booking.id)}>Delete</Button>
@@ -206,7 +206,7 @@ const ProfilePage = () => {
             <Tab eventKey="venues" title="My Venues">
               <Row>
                 <Col md={6}>
-                  <h5>Your Venues</h5>
+                  <h5>My Venues</h5>
                   {venues.length > 0 ? (
                     venues.map((venue) => (
                       <Card key={venue.id} className="mb-3 d-flex flex-row align-items-center p-3">
@@ -239,7 +239,7 @@ const ProfilePage = () => {
                 </Col>
 
                 <Col md={6}>
-                  <h5>Your Venue Bookings</h5>
+                  <h5>My Venue Bookings</h5>
                   {venueBookings.length > 0 ? (
                     venueBookings.map((booking) => (
                       <Card key={booking.id} className="mb-3 d-flex flex-row align-items-center p-3">

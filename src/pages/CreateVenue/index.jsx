@@ -146,7 +146,7 @@ function CreateVenue() {
           />
         </Form.Group>
 
-        <Form.Label>Images (Optional)</Form.Label>
+        <Form.Label>Images</Form.Label>
         {formData.images.map((image, index) => (
           <Form.Group key={index} className="mb-3 d-flex align-items-center">
             <Form.Control
