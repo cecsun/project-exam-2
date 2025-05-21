@@ -1,57 +1,15 @@
-/* .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
 body {
-  background-color: white; /* Soft blue-gray */
-  /* color: #212529; */
+  background-color: white;
   font-family: Arial, Helvetica, sans-serif;
 }
 
 /* Nav ---------------------------------------- */
 
-/* Override Navbar background and border */
 .navbar {
-  background-color: #087F8C; /* Override default bg */
+  background-color: #087F8C;
   border-bottom: 1px solid #dee2e6;
 }
 
-/* Brand styling */
 .navbar-brand {
   font-size: 1.75rem;
   transition: color 0.3s ease;
@@ -61,9 +19,7 @@ body {
   text-decoration: underline;
 }
 
-/* Nav links */
 .nav-link, .register-link {
-  /* margin-left: 1rem; */
   font-weight: 600;
   color: white !important;
 }
@@ -72,7 +28,6 @@ body {
   text-decoration: underline;
 }
 
-/* Logout button */
 .btn-outline-none, .login-link {
   margin-left: 1rem;
   font-weight: 600;
@@ -88,16 +43,6 @@ body {
   text-decoration: underline;
 }
 
-/* Responsive toggle customization (optional) */
-.navbar-toggler {
-  /* border-color: rgba(0, 0, 0, 0.1); */
-}
-
-/* Padding and spacing */
-/* .navbar .nav {
-  align-items: center;
-} */
-
 @media (max-width: 991px) {
   .navbar-toggler {
     color: white;
@@ -112,13 +57,39 @@ body {
   .nav-link, .btn-outline-none, .register-link, .login-link {
     margin-left: 0;
     margin-top: 0.5rem;
-    /* text-align: center; */
   }
 }
-/* Search Input ---------------------------------------- */
 
+/* Register/Login ------------------ */
 
+.register-form, .login-form {
+  padding: 2rem;
+  margin-bottom: 3rem;
+  max-width: 500px;
+}      
 
+.register-form h2, .login-form h2 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #095256;
+}
+
+.register-button, .login-button {
+  background-color: #095256;
+  color: white;
+  border: none;
+  font-weight: 400;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  width: 100%;
+
+}
+
+.register-button:hover, .login-button:hover {
+  background-color: #5aaa95 !important;
+}
+
+/* Search ---------------------------------------- */
 
 .search-input {
   padding: 10px 15px;
@@ -137,10 +108,9 @@ body {
 .search-input:focus {
   border-color: #087F8C; 
   box-shadow: 0 0 8px rgb(9, 82, 86, 0.5);
-  /* outline: none; */
 }
 
-/* Card ---------------------------------------- */
+/* Product card (Homepage) ---------------------------------------- */
 
 .card {
   border: none;
@@ -157,7 +127,7 @@ body {
 
 .card-clickable {
   cursor: pointer;
-  height: 350px; /* adjust as needed */
+  height: 350px;
   display: flex;
   flex-direction: column;
 }
@@ -186,93 +156,83 @@ body {
   color: #095256;
 }
 
+/* Single product page ------------------------- */
 
+.carousel-item .venue-page-carousel{
+  width: 100%;
+  height: 400px;
+}
 
+.venue-page h2 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #087F8C;
+}
 
+.venue-page p {
+  font-size: 1rem;
+}
 
+.venue-page h4 {
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: #095256;
+}
 
+.venue-page-rating {
+  font-size: 1.5rem;
+  color: #095256;
+}
 
+.react-datepicker__header {
+  background-color: #ededed;
+}
 
-
-
-
-
-
-
-
-
-.booking-section {
-  background: #fff;
+.react-datepicker__month-container {
+  background-color: white;
 }
 
 .booking-section h5 {
-  border-bottom: 2px solid #28a745;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  color: #095256;
+  font-size: 1.5rem;
 }
 
-.booking-section .form-control {
-  border-radius: 0.375rem;
-  box-shadow: none;
-  border: 1.5px solid #ced4da;
-  transition: border-color 0.3s ease;
+.booking-section h2 {
+  color: black;
+  font-weight: 400;
 }
 
-.booking-section .form-control:focus {
-  border-color: #28a745;
-  box-shadow: 0 0 8px rgba(40, 167, 69, 0.4);
-}
-
-.booking-section button {
+.booking-section .book-now-button {
   font-weight: 600;
-  font-size: 1.1rem;
+  color: black;
+  font-size: 1rem;
+  background-color: #5aaa95;
+  border: none;
+  border-radius: 50px;
+  text-transform: uppercase;
 }
 
-h2 {
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-p {
-  font-size: 1.05rem;
-  line-height: 1.5;
-}
-
-.text-success {
-  font-weight: 700;
-  font-size: 1.3rem;
-}
-
-.carousel .carousel-item img {
-  border-radius: 0.5rem;
+.booking-section .book-now-button:hover {
+  background-color: #095256;
+  color: white;
 }
 
 .booked-day {
-  background-color: #f8d7da !important; /* light red */
-  color: #721c24 !important; /* dark red */
+  background-color: #f8d7da !important;
+  color: #721c24 !important;
   pointer-events: none;
   text-decoration: line-through;
 }
 
-
-.footer-logo, .footer-contact {
-  color: #095256;
-  padding: 1rem 0;
-  font-size: 1rem;
-}
-
-/* Profile ------------------ */
+/* Profile ---------------------------------- */
 
 .profile-name{
-  /* font-size: 1.5rem; */
   font-weight: 600;
   color: #095256;
 }
 
 .save-picture {
   background-color: #095256;
-  /* border: 1px solid #ccc; */
-  /* border-radius: 20%; */
   border: none;
   padding: 8px 25px;
 }
@@ -280,18 +240,7 @@ p {
 .save-picture:hover {
   background-color: #5aaa95 !important;
   color: white;
-  /* text-decoration: underline; */
 }
-
-
-/* #profile-tabs button {
-  background-color: #095256;
-  color: white;
-  border: none;
-  font-weight: 400;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-} */
 
 .profile-tabs .nav-link.active {
   background-color: #095256;
@@ -305,31 +254,7 @@ p {
   font-weight: 400;
 }
 
-/* .custom-tabs .nav-link.active {
-  background-color: #007bff;
-  color: #fff !important;
-  font-weight: bold;
-  border: 1px solid #007bff;
-  border-bottom: none;
-  border-radius: 0.5rem 0.5rem 0 0;
-}
-
-.custom-tabs .nav-link.active {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.custom-tabs .nav-link {
-  color: #007bff;
-  transition: background-color 0.2s ease;
-}
-
-.custom-tabs .nav-link:hover {
-  background-color: #e9ecef;
-  color: #0056b3;
-} */
-
-
-.create-venue-button, .update-venue-button, .register-button, .login-button {
+.create-venue-button, .update-venue-button {
   background-color: #5aaa95;
   color: white;
   border: none;
@@ -338,16 +263,24 @@ p {
   border-radius: 0.5rem;
 }
 
-.create-venue-button:hover, .update-venue-button:hover, .register-button:hover, .login-button:hover {
+.create-venue-button:hover, .update-venue-button:hover {
   background-color: #5aaa95 !important;
   color: white;
   text-decoration: underline;
 }
 
-/* Create/Update Venue ----------------- */
+/* Create/Update page ----------------- */
 
-.create-venue-form h2, .update-venue h2, .register-form h2, .login-form h2 {
+.create-venue-form h2, .update-venue h2 {
   font-weight: 700;
   margin-bottom: 1rem;
   color: #095256;
+}
+
+/* Footer ---------------------------------- */
+
+.footer-logo, .footer-contact {
+  color: #095256;
+  padding: 1rem 0;
+  font-size: 1rem;
 }
