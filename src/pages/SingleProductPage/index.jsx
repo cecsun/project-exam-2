@@ -110,7 +110,7 @@ function SingleProductPage() {
   }
 
   return (
-    <Container className="py-4">
+    <Container className="venue-page py-4 mb-5">
       {/* Image carousel full width */}
       {product.media?.length > 0 && (
         <Row className="mb-4">
@@ -121,8 +121,7 @@ function SingleProductPage() {
                   <img
                     src={item.url}
                     alt={item.alt || product.name}
-                    className="d-block w-100 rounded"
-                    style={{ height: '400px', objectFit: 'cover' }}
+                    className="venue-page-carousel d-block rounded"
                   />
                 </Carousel.Item>
               ))}
@@ -134,19 +133,14 @@ function SingleProductPage() {
       {/* Two columns below image */}
       <Row>
         <Col md={7}>
-          <h2>{product.name}</h2>
+          <h2 className="text-break">{product.name}</h2>
+          <hr />
           <p>{product.description}</p>
-
-          <h4 className="text-success">${product.price.toFixed(2)}</h4>
-
-          {product.rating && (
-            <div className="mb-3">
-              <strong>Rating:</strong> {product.rating} / 5
-            </div>
-          )}
-
+          <hr />
+          <h4>${product.price.toFixed(2)}<span className='text-muted fw-light'>/night</span></h4>
+          <hr />
           {product.location && (
-            <div className="text-muted small mb-4">
+            <div className="text-muted mb-4">
               <strong>Location:</strong>
               <div>{product.location.address}</div>
               <div>
@@ -155,36 +149,42 @@ function SingleProductPage() {
               <div>{product.location.country}</div>
             </div>
           )}
+          <hr />
+          {product.rating && (
+            <div className="venue-page-rating mb-3">
+              <strong>Rating:</strong> {product.rating} / 5
+            </div>
+          )}
         </Col>
 
         <Col md={5}>
           <div className="booking-section p-3 border rounded shadow-sm">
-            <h5>Booking</h5>
+            <h5 className="fw-semibold d-flex justify-content-center">Booking</h5>
+            <hr />
             <Form>
               <Form.Group controlId="formDate" className="d-flex justify-content-center">
-  {/* Removed the label since the calendar is always visible */}
-  <DatePicker
-    onChange={handleDateChange}
-    startDate={selectedDates[0]}
-    endDate={selectedDates[1]}
-    selectsRange
-    minDate={new Date()}
-    inline
-    highlightDates={bookedDates}
-    filterDate={(date) =>
-      !bookedDates.some(
-        (bookedDate) => bookedDate.toDateString() === date.toDateString()
-      )
-    }
-     dayClassName={(date) =>
-    bookedDates.some(
-      (bookedDate) => bookedDate.toDateString() === date.toDateString()
-    )
-      ? 'booked-day'
-      : undefined
-  }
-  />
-</Form.Group>
+                <DatePicker
+                  onChange={handleDateChange}
+                  startDate={selectedDates[0]}
+                  endDate={selectedDates[1]}
+                  selectsRange
+                  minDate={new Date()}
+                  inline
+                  highlightDates={bookedDates}
+                  filterDate={(date) =>
+                    !bookedDates.some(
+                      (bookedDate) => bookedDate.toDateString() === date.toDateString()
+                    )
+                  }
+                  dayClassName={(date) =>
+                  bookedDates.some(
+                    (bookedDate) => bookedDate.toDateString() === date.toDateString()
+                  )
+                    ? 'booked-day'
+                    : undefined
+                }
+                />
+              </Form.Group>
 
 
               <Form.Group controlId="formGuests" className="mt-3">
@@ -204,8 +204,7 @@ function SingleProductPage() {
               {isAuthenticated && (
                 <Button
                   onClick={handleBookNowClick}
-                  variant="success"
-                  className="mt-4 w-100"
+                  className="book-now-button mt-4 w-100"
                 >
                   Book Now
                 </Button>
