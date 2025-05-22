@@ -16,7 +16,6 @@ function useFetch(apiUrl) {
         return json;
       } catch (error) {
         setHasError(true);
-        console.error(error);
       } finally {
         setIsLoading(false);
       }

@@ -27,14 +27,12 @@ const LoginForm = () => {
         return false;
       }
       const profileData = await res.json();
-      console.log('Profile data:', profileData);
       if (res.ok) {
         return profileData.data.venueManager;
       } else {
         setError('Failed to fetch profile data');
       }
     } catch (jsonErr) {
-      console.error('Error parsing profile data:', jsonErr);
       setError('Failed to parse profile data');
     }
 
@@ -72,7 +70,6 @@ const handleLogin = async (e) => {
       setError('Invalid email or password');
     }
   } catch (err) {
-    console.error('Login error:', err);
     setError('Login failed. Please try again.');
   }
 };

@@ -79,7 +79,6 @@ function SingleProductPage() {
         throw new Error(errorData.message || 'Failed to create booking');
       }
     } catch (err) {
-      console.error('Booking creation error:', err);
       alert(`❌ Error creating booking: ${err.message}`);
     }
   };

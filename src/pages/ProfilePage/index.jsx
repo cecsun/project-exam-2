@@ -48,7 +48,6 @@ const ProfilePage = () => {
       );
       return allBookings.flat();
     } catch (err) {
-      console.error('Error loading venue bookings:', err);
       return [];
     }
   };
@@ -75,7 +74,6 @@ const ProfilePage = () => {
         const venueBookings = await fetchVenueBookings(data.data.venues.map((v) => v.id));
         setVenueBookings(venueBookings);
       } catch (err) {
-        console.error('Error loading profile:', err);
       }
     };
 
@@ -107,7 +105,6 @@ const ProfilePage = () => {
         throw new Error(errorData.message || 'Failed to update avatar');
       }
     } catch (err) {
-      console.error('Avatar update error:', err);
       alert(`❌ Error updating avatar: ${err.message}`);
     }
   };
@@ -131,7 +128,6 @@ const ProfilePage = () => {
         throw new Error(errorData.message || 'Failed to delete booking');
       }
     } catch (err) {
-      console.error('Error deleting booking:', err);
       alert(`❌ Error deleting booking: ${err.message}`);
     }
   };
