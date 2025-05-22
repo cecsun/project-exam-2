@@ -1,70 +1,104 @@
-# Getting Started with Create React App
+# Holidaze – Accommodation Booking Front-End
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern front-end web application for the fictional accommodation booking service, Holidaze. The site allows visitors to browse and search venues, customers to book stays, and venue managers to create and manage listings.
+## Description
 
-## Available Scripts
+Holidaze is a fully responsive web application developed with React as the final project for my course. It showcases my skills in planning, designing, and building a modern front-end using current industry standards and tools. The application interacts with a REST API to handle live data and supports two types of users: customers and venue managers. This project brings together the knowledge and experience I’ve gained over the past two years in web development, UI design, and deployment workflows.
 
-In the project directory, you can run:
+## Getting Started
+### Dependencies
 
-### `npm start`
+Ensure your system meets the following requirements:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* Node.js (>=v20.11 recommended)
+* npm (>=v10.2.4+)
+* React (>=19)
+* Bootstrap (>=5.3.5)
+* OS: Windows 10 / macOS / Linux
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Installing
 
-### `npm test`
+#### Clone the repository:
+```
+git clone https://github.com/cecsun/project-exam-2.git
+cd project-exam-2
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Install dependencies:
 
-### `npm run build`
+```npm install```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Create a .env file in the root directory and add the API base URL:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`REACT_APP_API_KEY='replace with key'`
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+#### Executing Program
 
-### `npm run eject`
+##### To run the development server:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+`npm run start`
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The app will be available locally at `http://localhost:3000`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+##### To build for production:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+`npm run build`
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Help
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* If API calls fail, ensure the .env file is configured correctly and the API server is available.
+* Clear the browser cache or disable browser extensions that might interfere with CORS.
+* For general issues, delete `node_modules` directory and reinstall dependencies with `npm install`:
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Authors
 
-### Analyzing the Bundle Size
+Cecilie Øvstebø Sunde – @cecsun
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Version History
 
-### Making a Progressive Web App
+### 1.0
+* Fixed various errors related to api fetching
+* UI improvements
+* Finalizing design implementation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 0.2
 
-### Advanced Configuration
+* Bug fixes for authentication flow
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+* UI improvements
 
-### Deployment
+* Optimized API error handling
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+* See releases
 
-### `npm run build` fails to minify
+### 0.1
+* Initial project setup and feature implementation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+
+This project is licensed under the MIT License – see the LICENSE.md file for details.
+## Acknowledgments
+
+* Noroff Front-End Curriculum
+* Noroff Teacher Assistants 
+
+
+## Learning Outcomes Demonstrated
+
+* Planned and managed a full project using Trello
+
+* Designed UI and UX prototypes in Figma
+
+* Used React for component-based front-end development
+
+* Styled the interface with Bootstrap 5
+
+* Integrated with REST API to manage data dynamically
+
+* Added interactivity and logic with modern JavaScript
+
+* Tested with WAVE and HTML Validators
+
+* Deployed to Netlify

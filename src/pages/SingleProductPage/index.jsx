@@ -150,9 +150,14 @@ function SingleProductPage() {
             </div>
           )}
           <hr />
-          {product.rating && (
+          {product.rating !== 0 && (
             <div className="venue-page-rating mb-3">
               <strong>Rating:</strong> {product.rating} / 5
+            </div>
+          )}
+          {product.rating === 0 && (
+            <div className="venue-page-rating mb-3">
+              Not yet rated
             </div>
           )}
         </Col>
