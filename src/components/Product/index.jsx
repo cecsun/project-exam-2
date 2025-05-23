@@ -19,11 +19,10 @@ export default function Product({ productDetails }) {
 
   return (
     <Card
-      className="mb-4 shadow-sm h-100 w-100 rounded-4 hover-shadow d-flex flex-column"
+      className="homepage-card mb-4 shadow-sm h-100 w-100 rounded-4 hover-shadow d-flex flex-column"
       role="button"
       onClick={handleClick}
       aria-label={`View details for ${name}`}
-      style={{ cursor: 'pointer' }}
     >
       {media?.length > 0 && (
         <Carousel fade interval={3000} indicators={false}>
@@ -33,7 +32,6 @@ export default function Product({ productDetails }) {
                 src={item.url}
                 alt={item.alt || name}
                 className="d-block w-100 rounded-top-4"
-                style={{ objectFit: 'cover', height: '200px' }}
               />
             </Carousel.Item>
           ))}
@@ -41,23 +39,23 @@ export default function Product({ productDetails }) {
       )}
 
       <Card.Body className="d-flex flex-column flex-grow-1">
-        <Card.Title className="fw-semibold">{name}</Card.Title>
+        <Card.Title as="h1" className="fw-semibold">{name}</Card.Title>
 
-        <Card.Text className="small text-truncate-description">
+        <Card.Text as="p" className="text-truncate-description">
           {description}
         </Card.Text>
 
         {location?.city && location?.country && (
-          <div className="text-muted small">
+          <p className="text-muted">
             {location.city}, {location.country}
-          </div>
+          </p>
         )}
 
         <div className="mt-auto">
-          <h5 className="card-price fw-semibold">
+          <p className="card-price fw-semibold">
             ${price.toFixed(2)}
             <span className="text-muted fw-light">/night</span>
-          </h5>
+          </p>
         </div>
       </Card.Body>
     </Card>
