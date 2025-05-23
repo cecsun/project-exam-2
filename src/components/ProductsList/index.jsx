@@ -51,9 +51,7 @@ return (
       )}
 
       {hasError && (
-        <Alert variant="danger" className="mt-4">
-          Error loading venues. Please try again later.
-        </Alert>
+        <Alert variant="danger" className="mt-4">Error loading venues. Please try again later.</Alert>
       )}
 
       {!isLoading && !hasError && (
@@ -66,9 +64,7 @@ return (
             ))}
           </Row>
         ) : (
-          <Alert variant="info" className="mt-4">
-            No venues found
-          </Alert>
+          <Alert variant="info" className="mt-4">No venues found</Alert>
         )
       )}
     </Container>

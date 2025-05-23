@@ -99,13 +99,13 @@ const ProfilePage = () => {
       if (res.ok) {
         const updated = await res.json();
         setProfileData((prev) => ({ ...prev, avatar: updated }));
-        alert('✅ Avatar updated successfully!');
+        alert('Avatar updated successfully!');
       } else {
         const errorData = await res.json();
         throw new Error(errorData.message || 'Failed to update avatar');
       }
     } catch (err) {
-      alert(`❌ Error updating avatar: ${err.message}`);
+      alert(`Error updating avatar: ${err.message}`);
     }
   };
 
@@ -122,13 +122,13 @@ const ProfilePage = () => {
       if (res.ok) {
         setBookings((prev) => prev.filter((booking) => booking.id !== id));
         setVenueBookings((prev) => prev.filter((booking) => booking.id !== id));
-        alert('✅ Booking deleted successfully!');
+        alert('Booking deleted successfully!');
       } else {
         const errorData = await res.json();
         throw new Error(errorData.message || 'Failed to delete booking');
       }
     } catch (err) {
-      alert(`❌ Error deleting booking: ${err.message}`);
+      alert(`Error deleting booking: ${err.message}`);
     }
   };
 
@@ -207,10 +207,7 @@ const ProfilePage = () => {
                           src={venue.media?.[0]?.url || 'https://via.placeholder.com/100x100?text=No+Image'}
                           alt={venue.media?.[0]?.alt || venue.name}
                           thumbnail
-                          // width={100}
-                          // height={100}
                           className="image-my-venue me-3"
-                          // style={{ objectFit: 'cover' }}
                         />
                         <div className="flex-grow-1">
                           <strong className='my-venues-title'>{venue.name}</strong>
@@ -240,10 +237,7 @@ const ProfilePage = () => {
                           src={booking.venue?.media?.[0]?.url || 'https://via.placeholder.com/100x100?text=No+Image'}
                           alt={booking.venue?.media?.[0]?.alt || booking.venue?.name}
                           thumbnail
-                          // width={100}
-                          // height={100}
                           className="image-my-venue me-3"
-                          // style={{ objectFit: 'cover' }}
                         />
                         <div className="flex-grow-1">
                           <strong className='my-venues-title'>{booking.venue.name}</strong> — {booking.customer?.name}<br />

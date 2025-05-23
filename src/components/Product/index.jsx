@@ -41,9 +41,7 @@ export default function Product({ productDetails }) {
       <Card.Body className="d-flex flex-column flex-grow-1">
         <Card.Title as="h1" className="fw-semibold">{name}</Card.Title>
 
-        <Card.Text as="p" className="text-truncate-description">
-          {description}
-        </Card.Text>
+        <Card.Text as="p" className="text-truncate-description">{description}</Card.Text>
 
         {location?.city && location?.country && (
           <p className="text-muted">

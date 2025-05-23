@@ -11,7 +11,7 @@ const RegisterForm = () => {
     name: '',
     email: '',
     password: '',
-    role: 'customer', // 'customer' or 'venueManager'
+    role: 'customer',
   });
 
   const [errors, setErrors] = useState({});
@@ -52,7 +52,7 @@ const RegisterForm = () => {
       name: formData.name,
       email: formData.email,
       password: formData.password,
-      venueManager: formData.role === 'venueManager', // send boolean
+      venueManager: formData.role === 'venueManager',
     };
 
     try {
@@ -68,7 +68,7 @@ const RegisterForm = () => {
       const registerData = await registerRes.json();
 
       if (registerRes.status === 400) {
-        alert(`❌ ${registerData.errors?.[0]?.message || 'Registration failed'}`);
+        alert(`${registerData.errors?.[0]?.message || 'Registration failed'}`);
         return;
       }
 
@@ -90,19 +90,19 @@ const RegisterForm = () => {
         if (loginRes.ok) {
           const enhancedUser = {
             ...loginData.data,
-            venueManager: formData.role === 'venueManager', // add venueManager property
+            venueManager: formData.role === 'venueManager',
           };
-          login(loginData.data.accessToken, enhancedUser); // use enhancedUser instead of loginData.data
+          login(loginData.data.accessToken, enhancedUser);
           navigate('/profile');
         } else {
-          setServerResponse('✅ Registered, but login failed. Try logging in manually.');
+          setServerResponse('Registered, but login failed. Try logging in manually.');
           navigate('/login');
         }
       } else {
-        setServerResponse(`❌ ${registerData.message || 'Registration failed'}`);
+        setServerResponse(`${registerData.message || 'Registration failed'}`);
       }
     } catch (error) {
-      setServerResponse(`🚨 Network error: ${error.message}`);
+      setServerResponse(`Network error: ${error.message}`);
     }
   };
 

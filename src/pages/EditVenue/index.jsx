@@ -17,7 +17,6 @@ function EditVenue() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  // Fetch venue details
   useEffect(() => {
     async function fetchVenue() {
       setIsLoading(true);
@@ -180,12 +179,8 @@ function EditVenue() {
             </Button>
           </Form.Group>
         ))}
-        <Button variant="secondary" onClick={addImageField} type="button">
-          Add Image
-        </Button>
-        <Button type="submit" className="update-venue-button ms-2 my-3">
-          Update Venue
-        </Button>
+        <Button variant="secondary" onClick={addImageField} type="button">Add Image</Button>
+        <Button type="submit" className="update-venue-button ms-2 my-3">Update Venue</Button>
       </Form>
     </Container>
   );

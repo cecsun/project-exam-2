@@ -18,9 +18,7 @@ function AppNavbar() {
   return (
     <Navbar expand="lg" className="shadow-sm py-3">
       <Container>
-        <Navbar.Brand as={Link} to="/" className="fw-bold text-light">
-          Holidaze
-        </Navbar.Brand>
+        <Navbar.Brand as={Link} to="/" className="fw-bold text-light">Holidaze</Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse className="justify-content-end">
           <Nav>
@@ -29,9 +27,7 @@ function AppNavbar() {
                 <Nav.Link as={Link} to="/profile">
                   {user?.venueManager ? 'Profile' : 'Profile'}
                 </Nav.Link>
-                <Button variant="outline-none" onClick={handleLogout}>
-                  Logout
-                </Button>
+                <Button variant="outline-none" onClick={handleLogout}>Logout</Button>
               </>
             ) : (
               <>

@@ -1,6 +1,4 @@
 import React from 'react';
-// import './App.css';
-// import './scss/styles.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Routes, Route } from "react-router-dom"
 import Layout from './components/Layout';
@@ -12,7 +10,6 @@ import ProfilePage from './pages/ProfilePage';
 import RouteNotFound from './pages/RouteNotFound';
 import CreateVenue from './pages/CreateVenue';
 import EditVenue from './pages/EditVenue';
-// import ProtectedRoute from './components/ProtectedRoute/index.js';
 
 function App() {
   return (

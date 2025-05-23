@@ -9,7 +9,7 @@ function CreateVenue() {
     description: '',
     price: '',
     maxGuests: '',
-    images: [], // Array to hold multiple image URLs
+    images: [],
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -40,13 +40,11 @@ function CreateVenue() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Validate required fields
     if (!formData.name || !formData.description || !formData.price || !formData.maxGuests) {
       setError('All required fields must be filled out.');
       return;
     }
 
-    // Validate minimum values
     if (parseFloat(formData.price) < 0) {
       setError('Price must be at least 0.');
       return;
@@ -62,8 +60,8 @@ function CreateVenue() {
       price: parseFloat(formData.price),
       maxGuests: parseInt(formData.maxGuests, 10),
       media: formData.images
-        .filter((url) => url.trim() !== '') // Filter out empty image fields
-        .map((url) => ({ url, alt: `${formData.name} image` })), // Map to media objects
+        .filter((url) => url.trim() !== '')
+        .map((url) => ({ url, alt: `${formData.name} image` })),
     };
 
     try {
@@ -79,7 +77,7 @@ function CreateVenue() {
 
       if (res.ok) {
         setSuccess('Venue created successfully!');
-        setTimeout(() => navigate('/profile'), 2000); // Redirect to profile after success
+        setTimeout(() => navigate('/profile'), 2000);
       } else {
         const errorData = await res.json();
         setError(errorData.message || 'Failed to create venue.');
@@ -128,7 +126,7 @@ function CreateVenue() {
             placeholder="Enter price per night"
             value={formData.price}
             onChange={handleChange}
-            min="0" // Minimum value for price
+            min="0"
             required
           />
         </Form.Group>
@@ -141,7 +139,7 @@ function CreateVenue() {
             placeholder="Enter maximum number of guests"
             value={formData.maxGuests}
             onChange={handleChange}
-            min="1" // Minimum value for maxGuests
+            min="1"
             required
           />
         </Form.Group>
@@ -165,13 +163,9 @@ function CreateVenue() {
           </Form.Group>
         ))}
         <div></div>
-        <Button variant="secondary" onClick={addImageField}>
-          Add Image
-        </Button>
+        <Button variant="secondary" onClick={addImageField}>Add Image</Button>
         <div></div>
-        <Button type="submit" className="create-venue-button my-5 w-100">
-          Create Venue
-        </Button>
+        <Button type="submit" className="create-venue-button my-5 w-100">Create Venue</Button>
       </Form>
     </Container>
   );

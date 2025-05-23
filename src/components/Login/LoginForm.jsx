@@ -54,7 +54,6 @@ const handleLogin = async (e) => {
     const data = await response.json();
 
     if (response.ok && data.data?.accessToken) {
-      // Check if the user is a venue manager
       const isManager = await isVenueManager(data.data);
 
       const enhancedUser = {
@@ -64,7 +63,6 @@ const handleLogin = async (e) => {
 
       login(data.data.accessToken, enhancedUser);
 
-      // ✅ Navigate to the profile page after successful login
       navigate('/profile');
     } else {
       setError('Invalid email or password');
