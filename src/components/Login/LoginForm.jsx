@@ -77,7 +77,7 @@ const handleLogin = async (e) => {
 
   return (
     <Container className="login-form bg-light mt-5 border rounded shadow-sm">
-      <h2 className='mb-4 d-flex justify-content-center'>Login</h2>
+      <h1 className='mb-4 d-flex justify-content-center'>Login</h1>
       {error && <Alert variant="danger">{error}</Alert>}
       <Form onSubmit={handleLogin}>
         <Form.Group className="mb-3" controlId="email">
