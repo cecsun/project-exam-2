@@ -90,8 +90,8 @@ function CreateVenue() {
   };
 
   return (
-    <Container className="create-venue-form mt-5" style={{ maxWidth: '600px' }}>
-      <h2>Create Venue</h2>
+    <Container className="mt-5" style={{ maxWidth: '600px' }}>
+      <h1 className='text-center mb-4'>Create Venue</h1>
       {error && <Alert variant="danger">{error}</Alert>}
       {success && <Alert variant="success">{success}</Alert>}
       <Form onSubmit={handleSubmit}>
