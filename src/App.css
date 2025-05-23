@@ -1,6 +1,48 @@
 body {
   background-color: white;
   font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+}
+
+/* Font sizes --------------------------------- */
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #087F8C;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1rem;
+}
+
+.button {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #087F8C;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+  
+
+  p {
+    font-size: 0.9375rem;
+  }
+
+  .button {
+    font-size: 0.9375rem;
+  }
 }
 
 /* Nav ---------------------------------------- */
@@ -11,8 +53,7 @@ body {
 }
 
 .navbar-brand {
-  font-size: 1.75rem;
-  transition: color 0.3s ease;
+  font-size: 2rem;
 }
 
 .navbar-brand:hover {
@@ -20,6 +61,7 @@ body {
 }
 
 .nav-link, .register-link {
+  font-size: 1rem;
   font-weight: 600;
   color: white !important;
 }
@@ -29,7 +71,6 @@ body {
 }
 
 .btn-outline-none, .login-link {
-  margin-left: 1rem;
   font-weight: 600;
   border-radius: 50px;
   padding: 0.5rem 1.5rem !important;
@@ -38,12 +79,11 @@ body {
 }
 
 .btn-outline-none:hover, .login-link:hover {
-  background-color: #5aaa95;
+  background-color: #095256 !important;
   color: white;
   text-decoration: underline;
 }
 
-@media (max-width: 991px) {
   .navbar-toggler {
     color: white;
     background-color: white;
@@ -55,10 +95,8 @@ body {
   }
 
   .nav-link, .btn-outline-none, .register-link, .login-link {
-    margin-left: 0;
     margin-top: 0.5rem;
   }
-}
 
 /* Register/Login ------------------ */
 
@@ -68,21 +106,14 @@ body {
   max-width: 500px;
 }      
 
-.register-form h2, .login-form h2 {
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #095256;
-}
-
 .register-button, .login-button {
   background-color: #095256;
   color: white;
   border: none;
   font-weight: 400;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0;
   border-radius: 1.5rem;
   width: 100%;
-
 }
 
 .register-button:hover, .login-button:hover {
@@ -94,29 +125,21 @@ body {
 .search-input {
   padding: 10px 15px;
   border-radius: 25px;
-  border: 1.5px solid #ccc;
-  font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .search-input::placeholder {
   color: #999;
   font-style: italic;
-}
-
-.search-input:focus {
-  border-color: #087F8C; 
-  box-shadow: 0 0 8px rgb(9, 82, 86, 0.5);
+  font-size: 1rem;
 }
 
 /* Product card (Homepage) ---------------------------------------- */
 
-.card {
+.homepage-card {
   border: none;
   transition: transform 0.2s ease;
 }
-.card:hover {
+.homepage-card:hover {
   transform: scale(1.01);
 }
 
@@ -147,12 +170,10 @@ body {
 }
 
 .card-title {
-  font-size: 1.5rem;
-  color: #095256;
+  color: #087F8C;
 }
 
 .card-price {
-  font-size: 1.25rem;
   color: #095256;
 }
 
@@ -163,24 +184,11 @@ body {
   height: 400px;
 }
 
-.venue-page h2 {
-  font-weight: 700;
-  margin-bottom: 1rem;
+.venue-page h1 {
   color: #087F8C;
 }
 
-.venue-page p {
-  font-size: 1rem;
-}
-
-.venue-page h4 {
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #095256;
-}
-
-.venue-page-rating {
-  font-size: 1.5rem;
+.venue-page .price, .venue-page .rating, .booking-section h2 {
   color: #095256;
 }
 
@@ -192,29 +200,9 @@ body {
   background-color: white;
 }
 
-.booking-section h5 {
-  color: #095256;
-  font-size: 1.5rem;
-}
-
-.booking-section h2 {
-  color: black;
+h2.react-datepicker__current-month {
+  color: black !important;
   font-weight: 400;
-}
-
-.booking-section .book-now-button {
-  font-weight: 600;
-  color: black;
-  font-size: 1rem;
-  background-color: #5aaa95;
-  border: none;
-  border-radius: 50px;
-  text-transform: uppercase;
-}
-
-.booking-section .book-now-button:hover {
-  background-color: #095256;
-  color: white;
 }
 
 .booked-day {
@@ -224,22 +212,33 @@ body {
   text-decoration: line-through;
 }
 
-/* Profile ---------------------------------- */
-
-.profile-name{
-  font-weight: 600;
-  color: #095256;
+.booking-section .button {
+  color: black;
+  background-color: #5aaa95;
+  border: none;
+  border-radius: 50px;
 }
+
+.booking-section .button:hover {
+  text-decoration: underline;
+}
+
+/* Profile ---------------------------------- */
 
 .save-picture {
   background-color: #095256;
   border: none;
-  padding: 8px 25px;
+  width: 100px;
+  border-radius: 50px;
 }
 
 .save-picture:hover {
-  background-color: #5aaa95 !important;
-  color: white;
+  background-color: #095256 !important;
+  text-decoration: underline;
+}
+
+.profile-tabs, .profile-venues {
+  font-size: 1.2rem;
 }
 
 .profile-tabs .nav-link.active {
@@ -254,33 +253,32 @@ body {
   font-weight: 400;
 }
 
+.my-bookings-title, .my-venues-title {
+  font-size: 1rem;
+}
+
+.image-my-booking, .image-my-venue {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
 .create-venue-button, .update-venue-button {
   background-color: #5aaa95;
-  color: white;
+  color: black;
   border: none;
-  font-weight: 400;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
+  border-radius: 50px;
+  width: 100%;
 }
 
 .create-venue-button:hover, .update-venue-button:hover {
   background-color: #5aaa95 !important;
-  color: white;
+  color: black !important;
   text-decoration: underline;
-}
-
-/* Create/Update page ----------------- */
-
-.create-venue-form h2, .update-venue h2 {
-  font-weight: 700;
-  margin-bottom: 1rem;
-  color: #095256;
 }
 
 /* Footer ---------------------------------- */
 
 .footer-logo, .footer-contact {
   color: #095256;
-  padding: 1rem 0;
-  font-size: 1rem;
 }
