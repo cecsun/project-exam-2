@@ -138,7 +138,7 @@ const ProfilePage = () => {
 
   return (
     <Container className="mt-5">
-      <Card className="p-4">
+      <Card className="profile-card p-4 mb-4">
         <div className="d-flex align-items-center gap-4 mb-4">
           <Image
             src={profileData.data.avatar?.url || 'https://via.placeholder.com/150'}
@@ -147,7 +147,7 @@ const ProfilePage = () => {
             height="100"
           />
           <div>
-            <h3 className='profile-name'>{profileData.data.name}</h3>
+            <h1 className='profile-name'>{profileData.data.name}</h1>
             <p><strong>Role:</strong> {profileData.data.venueManager ? 'Venue Manager' : 'Customer'}</p>
           </div>
         </div>
@@ -163,7 +163,7 @@ const ProfilePage = () => {
             />
           </Form.Group>
           <div className='d-flex justify-content-end mt-2'>
-            <Button type="submit" className="save-picture">Save</Button>
+            <Button type="submit" className="save-picture button">Save</Button>
           </div>
         </Form>
 
@@ -179,13 +179,10 @@ const ProfilePage = () => {
                     src={booking.venue?.media?.[0]?.url || 'https://via.placeholder.com/100x100?text=No+Image'}
                     alt={booking.venue?.media?.[0]?.alt || booking.venue?.name}
                     thumbnail
-                    width={100}
-                    height={100}
-                    className="me-3"
-                    style={{ objectFit: 'cover' }}
+                    className="image-my-booking me-3"
                   />
                   <div className="flex-grow-1">
-                    <strong className='text-break'>{booking.venue.name}</strong><br />
+                    <strong className='my-bookings-title text-break'>{booking.venue.name}</strong><br />
                     {new Date(booking.dateFrom).toLocaleDateString()} – {new Date(booking.dateTo).toLocaleDateString()}
                     <div className="mt-2">
                       <Button variant="danger" onClick={() => handleDeleteBooking(booking.id)}>Delete</Button>
@@ -202,7 +199,7 @@ const ProfilePage = () => {
             <Tab eventKey="venues" title="My Venues">
               <Row>
                 <Col md={6}>
-                  <h5>My Venues</h5>
+                  <div className="profile-venues mb-2">My Venues</div>
                   {venues.length > 0 ? (
                     venues.map((venue) => (
                       <Card key={venue.id} className="mb-3 d-flex flex-row align-items-center p-3">
@@ -210,13 +207,13 @@ const ProfilePage = () => {
                           src={venue.media?.[0]?.url || 'https://via.placeholder.com/100x100?text=No+Image'}
                           alt={venue.media?.[0]?.alt || venue.name}
                           thumbnail
-                          width={100}
-                          height={100}
-                          className="me-3"
-                          style={{ objectFit: 'cover' }}
+                          // width={100}
+                          // height={100}
+                          className="image-my-venue me-3"
+                          // style={{ objectFit: 'cover' }}
                         />
                         <div className="flex-grow-1">
-                          <strong>{venue.name}</strong>
+                          <strong className='my-venues-title'>{venue.name}</strong>
                           <div className="mt-2">
                             <Button variant="secondary" onClick={() => navigate(`/venues/edit/${venue.id}`)} className="me-2">
                               Edit
@@ -235,7 +232,7 @@ const ProfilePage = () => {
                 </Col>
 
                 <Col md={6}>
-                  <h5>My Venue Bookings</h5>
+                  <div className="profile-venues mb-2">My Venue Bookings</div>
                   {venueBookings.length > 0 ? (
                     venueBookings.map((booking) => (
                       <Card key={booking.id} className="mb-3 d-flex flex-row align-items-center p-3">
@@ -243,13 +240,13 @@ const ProfilePage = () => {
                           src={booking.venue?.media?.[0]?.url || 'https://via.placeholder.com/100x100?text=No+Image'}
                           alt={booking.venue?.media?.[0]?.alt || booking.venue?.name}
                           thumbnail
-                          width={100}
-                          height={100}
-                          className="me-3"
-                          style={{ objectFit: 'cover' }}
+                          // width={100}
+                          // height={100}
+                          className="image-my-venue me-3"
+                          // style={{ objectFit: 'cover' }}
                         />
                         <div className="flex-grow-1">
-                          <strong>{booking.venue.name}</strong> — {booking.customer?.name}<br />
+                          <strong className='my-venues-title'>{booking.venue.name}</strong> — {booking.customer?.name}<br />
                           {new Date(booking.dateFrom).toLocaleDateString()} – {new Date(booking.dateTo).toLocaleDateString()}
                         </div>
                       </Card>
