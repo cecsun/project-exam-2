@@ -108,7 +108,7 @@ const RegisterForm = () => {
 
   return (
     <Container className="register-form sm bg-light mt-5 border rounded shadow-sm">
-      <h2 className="mb-4 d-flex justify-content-center">Register</h2>
+      <h1 className="mb-4 d-flex justify-content-center">Register</h1>
       {serverResponse && <Alert variant="danger">{serverResponse}</Alert>}
       <Form onSubmit={handleSubmit} noValidate>
         <Form.Group className="mb-3" controlId="name">
