@@ -72,14 +72,14 @@ function SingleProductPage() {
       });
       if (res.ok) {
         const data = await res.json();
-        alert('✅ Booking created successfully!', data);
+        alert('Booking created successfully!', data);
         navigate('/profile');
       } else {
         const errorData = await res.json();
         throw new Error(errorData.message || 'Failed to create booking');
       }
     } catch (err) {
-      alert(`❌ Error creating booking: ${err.message}`);
+      alert(`Error creating booking: ${err.message}`);
     }
   };
 
@@ -110,7 +110,6 @@ function SingleProductPage() {
 
   return (
     <Container className="venue-page py-4 mb-5">
-      {/* Image carousel full width */}
       {product.media?.length > 0 && (
         <Row className="mb-4">
           <Col>
@@ -129,41 +128,39 @@ function SingleProductPage() {
         </Row>
       )}
 
-      {/* Two columns below image */}
       <Row>
         <Col md={7}>
-          <h2 className="text-break">{product.name}</h2>
+          <h1 className="text-break">{product.name}</h1>
           <hr />
           <p>{product.description}</p>
           <hr />
-          <h4>${product.price.toFixed(2)}<span className='text-muted fw-light'>/night</span></h4>
+          <p className='price'><strong>${product.price.toFixed(2)}</strong><span className='text-muted fw-light'>/night</span></p>
           <hr />
           {product.location && (
-            <div className="text-muted mb-4">
-              <strong>Location:</strong>
-              <div>{product.location.address}</div>
-              <div>
-                {product.location.zip} {product.location.city}
-              </div>
-              <div>{product.location.country}</div>
-            </div>
+            <p className="mb-4">
+              <strong>Location:</strong><br />
+              {product.location.address}<br />
+              {product.location.zip} {product.location.city}<br />
+              {product.location.country}
+            </p>
           )}
+
           <hr />
           {product.rating !== 0 && (
-            <div className="venue-page-rating mb-3">
-              <strong>Rating:</strong> {product.rating} / 5
-            </div>
+            <p className="rating mb-3">
+              <strong>Rating: {product.rating} / 5</strong>
+            </p>
           )}
           {product.rating === 0 && (
-            <div className="venue-page-rating mb-3">
+            <p className="rating mb-3">
               Not yet rated
-            </div>
+            </p>
           )}
         </Col>
 
         <Col md={5}>
           <div className="booking-section p-3 border rounded shadow-sm">
-            <h5 className="fw-semibold d-flex justify-content-center">Booking</h5>
+            <h2 className="fw-semibold d-flex justify-content-center">Booking</h2>
             <hr />
             <Form>
               <Form.Group controlId="formDate" className="d-flex justify-content-center">
@@ -200,24 +197,15 @@ function SingleProductPage() {
                   min={1}
                   max={product.maxGuests}
                 />
-                <Form.Text className="text-muted">
-                  Max Guests: {product.maxGuests}
-                </Form.Text>
+                <Form.Text className="text-muted">Max Guests: {product.maxGuests}</Form.Text>
               </Form.Group>
 
               {isAuthenticated && (
-                <Button
-                  onClick={handleBookNowClick}
-                  className="book-now-button mt-4 w-100"
-                >
-                  Book Now
-                </Button>
+                <Button onClick={handleBookNowClick} className="button mt-4 w-100">Book Now</Button>
               )}
 
               {!isAuthenticated && (
-                <Alert variant="warning" className="mt-3">
-                  Please log in to book this product.
-                </Alert>
+                <Alert variant="warning" className="mt-3">Please log in to book this product.</Alert>
               )}
             </Form>
           </div>
