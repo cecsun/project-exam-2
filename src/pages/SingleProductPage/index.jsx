@@ -205,7 +205,7 @@ function SingleProductPage() {
               )}
 
               {!isAuthenticated && (
-                <Alert variant="warning" className="mt-3">Please log in to book this product.</Alert>
+                <Alert variant="warning" className="mt-3">Please login to book this venue.</Alert>
               )}
             </Form>
           </div>
