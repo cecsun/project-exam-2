@@ -3,7 +3,7 @@ import { Form, Button, Alert, Container } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
 import { API_LOGIN_URL } from '../../common/constants';
-import { API_KEY, API_PROFILE_URL } from '../../common/constants';
+import { API_KEY, API_PROFILES_URL } from '../../common/constants';
 
 const LoginForm = () => {
   const { login } = useContext(AuthContext);
@@ -14,7 +14,7 @@ const LoginForm = () => {
 
   const isVenueManager = async (user) => {
     try {
-      const res = await fetch(`${API_PROFILE_URL}/${user.name}`, {
+      const res = await fetch(`${API_PROFILES_URL}/${user.name}`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${user.accessToken}`,

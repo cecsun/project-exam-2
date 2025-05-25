@@ -13,7 +13,7 @@ import {
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import AuthContext from '../../context/AuthContext';
-import { API_BASE_URL, API_KEY } from '../../common/constants';
+import { API_BOOKINGS_URL, API_KEY, API_VENUES_URL, API_PROFILES_URL } from '../../common/constants';
 
 const ProfilePage = () => {
   const { user } = useContext(AuthContext);
@@ -31,7 +31,7 @@ const ProfilePage = () => {
     try {
       const allBookings = await Promise.all(
         venueIds.map(async (venueId) => {
-          const res = await fetch(`${API_BASE_URL}/holidaze/venues/${venueId}?_bookings=true`, {
+          const res = await fetch(`${API_VENUES_URL}/${venueId}?_bookings=true`, {
             headers: {
               'Content-Type': 'application/json',
               Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -57,7 +57,7 @@ const ProfilePage = () => {
 
     const fetchProfile = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/holidaze/profiles/${user.name}?_bookings=true&_venues=true`, {
+        const res = await fetch(`${API_PROFILES_URL}/${user.name}?_bookings=true&_venues=true`, {
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
@@ -82,7 +82,7 @@ const ProfilePage = () => {
 
   const handleAvatarUpdate = async () => {
     try {
-      const res = await fetch(`${API_BASE_URL}/holidaze/profiles/${user.name}`, {
+      const res = await fetch(`${API_PROFILES_URL}/${user.name}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ const ProfilePage = () => {
 
   const handleDeleteBooking = async (id) => {
     try {
-      const res = await fetch(`${API_BASE_URL}/holidaze/bookings/${id}`, {
+      const res = await fetch(`${API_BOOKINGS_URL}/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

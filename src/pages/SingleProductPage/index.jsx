@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useFetch } from '../../hooks/useFetch';
-import { API_BOOKINGS_URL, API_SINGLE_PRODUCT_URL, API_KEY } from '../../common/constants';
+import { API_BOOKINGS_URL, API_VENUES_URL, API_KEY } from '../../common/constants';
 import { useState, useContext } from 'react';
 import {
   Container,
@@ -19,7 +19,7 @@ import AuthContext from '../../context/AuthContext';
 function SingleProductPage() {
   const params = useParams();
   const { data, hasError, isLoading } = useFetch(
-    `${API_SINGLE_PRODUCT_URL}/${params.id}?_bookings=true`
+    `${API_VENUES_URL}/${params.id}?_bookings=true`
   );
 
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Spinner, Alert } from 'react-bootstrap';
 import Product from '../Product';
-import { API_BASE_URL } from '../../common/constants';
+import { API_VENUES_URL } from '../../common/constants';
 import SearchBar from '../SearchBar';
 
 function ProductsList() {
@@ -13,9 +13,9 @@ function ProductsList() {
     setIsLoading(true);
     setHasError(false);
     try {
-      let url = `${API_BASE_URL}/holidaze/venues`;
+      let url = `${API_VENUES_URL}`;
       if (query.trim()) {
-        url = `${API_BASE_URL}/holidaze/venues/search?q=${encodeURIComponent(query)}`;
+        url = `${API_VENUES_URL}/search?q=${encodeURIComponent(query)}`;
       }
       const res = await fetch(url);
       if (!res.ok) throw new Error('Failed to fetch venues');

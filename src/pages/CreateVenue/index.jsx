@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
-import { API_BASE_URL, API_KEY } from '../../common/constants';
+import { API_KEY, API_VENUES_URL } from '../../common/constants';
 import { useNavigate } from 'react-router-dom';
 
 function CreateVenue() {
@@ -65,7 +65,7 @@ function CreateVenue() {
     };
 
     try {
-      const res = await fetch(`${API_BASE_URL}/holidaze/venues`, {
+      const res = await fetch(`${API_VENUES_URL}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

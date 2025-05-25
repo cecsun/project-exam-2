@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Alert, Spinner } from 'react-bootstrap';
-import { API_BASE_URL, API_KEY } from '../../common/constants';
+import { API_KEY, API_VENUES_URL } from '../../common/constants';
 
 function EditVenue() {
   const { id } = useParams();
@@ -21,7 +21,7 @@ function EditVenue() {
     async function fetchVenue() {
       setIsLoading(true);
       try {
-        const res = await fetch(`${API_BASE_URL}/holidaze/venues/${id}`);
+        const res = await fetch(`${API_VENUES_URL}/${id}`);
         if (!res.ok) throw new Error('Failed to fetch venue');
         const data = await res.json();
         const venue = data.data;
@@ -84,7 +84,7 @@ function EditVenue() {
     };
 
     try {
-      const res = await fetch(`${API_BASE_URL}/holidaze/venues/${id}`, {
+      const res = await fetch(`${API_VENUES_URL}/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
