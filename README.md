@@ -1,9 +1,9 @@
-# Holidaze – Accommodation Booking Front-End
+# Holidaze – An Accommodation Booking Site
 
-A modern front-end web application for the fictional accommodation booking service, Holidaze. The site allows visitors to browse and search venues, customers to book stays, and venue managers to create and manage listings.
+A front-end web application for a newly launched accommodation booking site called Holidaze. The site allows visitors to browse and search venues, customers to book stays, and venue managers to create and manage venues.
 ## Description
 
-Holidaze is a fully responsive web application developed with React as the final project for my course. It showcases my skills in planning, designing, and building a modern front-end using current industry standards and tools. The application interacts with a REST API to handle live data and supports two types of users: customers and venue managers. This project brings together the knowledge and experience I’ve gained over the past two years in web development, UI design, and deployment workflows.
+Holidaze is a fully responsive web application developed with React as the final project of my course. It showcases my skills in planning, designing, and building a modern front-end using current industry standards and tools. The application interacts with a REST API to handle live data and supports two types of users: customers and venue managers. This project brings together the knowledge and experience I’ve gained over the past two years in web development, design, and deployment workflows.
 
 ## Getting Started
 ### Dependencies
@@ -14,7 +14,7 @@ Ensure your system meets the following requirements:
 * npm (>=v10.2.4+)
 * React (>=19)
 * Bootstrap (>=5.3.5)
-* OS: Windows 10 / macOS / Linux
+* OS: Windows / macOS / Linux
 
 ### Installing
 
@@ -62,18 +62,12 @@ Cecilie Øvstebø Sunde – @cecsun
 * Fixed various errors related to api fetching
 * UI improvements
 * Finalizing design implementation
-
-### 0.2
-
-* Bug fixes for authentication flow
-
-* UI improvements
-
-* Optimized API error handling
-
-* See releases
+* Refactoring
 
 ### 0.1
+* Bug fixes for authentication flow
+* UI improvements
+* Optimized API error handling
 * Initial project setup and feature implementation
 
 ## License
@@ -89,7 +83,7 @@ This project is licensed under the MIT License – see the LICENSE.md file for d
 
 * Planned and managed a full project using Trello
 
-* Designed UI and UX prototypes in Figma
+* Created style guide and prototype in Figma
 
 * Used React for component-based front-end development
 
