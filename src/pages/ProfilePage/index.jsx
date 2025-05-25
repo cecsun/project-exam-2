@@ -132,6 +132,27 @@ const ProfilePage = () => {
     }
   };
 
+  const handleDeleteVenue = async (id) => {
+    try {
+      const res = await fetch(`${API_VENUES_URL}/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          'X-Noroff-API-Key': API_KEY,
+        },
+      });
+      if (res.ok) {
+        setVenues((prev) => prev.filter((venue) => venue.id !== id));
+        alert('Venue deleted successfully!');
+      } else {
+        const errorData = await res.json();
+        throw new Error(errorData.message || 'Failed to delete venue');
+      }
+    } catch (err) {
+      alert(`Error deleting venue: ${err.message}`);
+    }
+  };
+
   if (!profileData) {
     return <div className="text-center mt-5"><Spinner animation="border" /></div>;
   }
@@ -215,9 +236,7 @@ const ProfilePage = () => {
                             <Button variant="secondary" onClick={() => navigate(`/venues/edit/${venue.id}`)} className="me-2">
                               Edit
                             </Button>
-                            <Button variant="danger" onClick={() => navigate(`/venues/delete/${venue.id}`)}>
-                              Delete
-                            </Button>
+                            <Button variant="danger" onClick={() => handleDeleteVenue(venue.id)}>Delete</Button>
                           </div>
                         </div>
                       </Card>
